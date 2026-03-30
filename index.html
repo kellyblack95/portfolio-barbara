@@ -462,35 +462,88 @@ html, body {
   .cur { display: none; }
   .scroll-line { display: none; }
 
-  /* ── Columna izquierda ── */
+  /* ── Mobile nav ── */
+  .mobile-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    position: sticky; top: 0; z-index: 500;
+    background: #0a0a0a;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .mobile-nav-title {
+    font-family: 'Varent Grotesk', var(--font-serif);
+    font-size: 1.1rem; font-weight: 700;
+    letter-spacing: -0.02em; color: #f0f0f0;
+  }
+  .mobile-menu-btn {
+    background: none; border: none; color: #f0f0f0;
+    font-size: 20px; padding: 4px 8px; cursor: auto;
+    line-height: 1;
+  }
+  .mobile-drawer {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    background: #0d0d0d;
+    border-bottom: 1px solid #1a1a1a;
+    padding: 6px 0;
+  }
+  .mobile-drawer.open { display: flex; }
+  .mobile-drawer a, .mobile-drawer button {
+    font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+    font-weight: 600; color: #888;
+    background: none; border: none;
+    padding: 14px 20px; text-decoration: none;
+    text-align: left; width: 100%;
+    border-bottom: 1px solid #1a1a1a;
+    transition: color .2s;
+  }
+  .mobile-drawer a:last-child,
+  .mobile-drawer button:last-child { border-bottom: none; }
+  .mobile-drawer a:hover, .mobile-drawer button:hover { color: #ff00aa; }
+
+  /* ── Panel premios mobile ── */
+  .mobile-awards-panel {
+    display: none;
+    padding: 20px;
+    background: #0d0d0d;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .mobile-awards-panel.open { display: block; }
+
+  /* ── Columna izquierda: solo el título visible ── */
   .left {
     width: 100%; min-width: 0; height: auto;
-    border-right: none;
-    flex-shrink: 0;
-    overflow: visible;
+    border-right: none; flex-shrink: 0; overflow: visible;
   }
-  .left-header { padding: 16px 20px 10px; }
-  .left-canvas-wrap { display: none; }
+  .left-header { display: none; }
+  .left-canvas-wrap {
+    flex: none; min-height: 0;
+    position: static;
+  }
+  .left-overlay {
+    position: static;
+  }
+  .left-fade { display: none; }
   .left-body {
-    padding: 20px 20px 24px;
+    padding: 28px 20px 20px;
     flex-direction: column;
   }
+  .awards-section { display: none; }
 
   /* ── Título ── */
   .name-row { align-items: flex-end; gap: 10px; margin-bottom: 6px; }
   .left-name {
-    font-size: 3.2rem !important;
-    white-space: nowrap;
+    font-size: 3.4rem !important;
     overflow: visible;
     width: auto !important;
     height: auto !important;
   }
   .eye { width: 40px; height: 40px; margin-bottom: 2px; }
-
-  /* ── Awards ── */
-  .awards-section { opacity: 1; animation: none; }
-  .awards-logo { width: 60px; }
-  .rule { width: 100%; margin: 10px 0 14px; }
+  .left-role { opacity: 1; animation: none; }
+  .rule { width: 100%; margin: 10px 0 0; }
 
   /* ── Columna derecha ── */
   .right {
@@ -541,6 +594,56 @@ html, body {
   <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
     <path fill="#ff00aa" d="M25.75,47.38h-1.55c-.16-6.28-1.12-10.68-2.87-13.19-3.08.56-7.23,2.9-12.44,7.02-.38-.38-.8-.75-1.27-1.13,4.81-4.65,7.51-8.51,8.1-11.59-1.1-.72-2.63-1.31-4.59-1.77-1.96-.45-3.6-.75-4.9-.87-1.3-.13-3.02-.25-5.16-.38v-1.23c7.26-.44,12.14-1.44,14.65-3.02-.53-2.86-3.14-6.82-7.82-11.87l.99-.94c5.37,4.24,9.55,6.64,12.53,7.21,1.7-2.26,2.62-6.6,2.78-13h1.55c.16,6.35,1.1,10.68,2.83,13,2.98-.56,7.16-2.97,12.53-7.21l.94.94c-4.68,5.06-7.29,8.98-7.82,11.78,2.64,1.63,7.54,2.67,14.7,3.11v1.23c-2.14.13-3.86.25-5.16.38-1.3.13-2.94.42-4.92.87-1.98.46-3.52,1.05-4.62,1.77.6,3.05,3.31,6.91,8.15,11.59-.47.38-.9.75-1.27,1.13-5.22-4.11-9.36-6.45-12.44-7.02-1.79,2.54-2.76,6.94-2.92,13.19Z"/>
   </svg>
+</div>
+
+<!-- ══ MOBILE NAV (solo mobile) ══ -->
+<nav class="mobile-nav" id="mobileNav" style="display:none">
+  <span class="mobile-nav-title">Bár bara</span>
+  <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+</nav>
+<div class="mobile-drawer" id="mobileDrawer">
+  <a href="#" download>↓ Descargar CV</a>
+  <button id="mobileAwardsBtn">Premios Eikon</button>
+  <a href="https://www.instagram.com/emepecuatro" target="_blank">Instagram</a>
+  <a href="https://www.behance.net/emepecuatro" target="_blank">Behance</a>
+  <a href="https://www.linkedin.com/in/b%C3%A1rbara-soto-46aa49125/" target="_blank">LinkedIn</a>
+</div>
+<div class="mobile-awards-panel" id="mobileAwardsPanel">
+  <img src="Eikon.svg" alt="EIKON" class="awards-logo" style="width:60px;margin-bottom:12px;filter:brightness(0) invert(.7)">
+  <div class="awards-tags">
+    <div class="award-item">
+      <button class="award-btn">Saval <span class="award-btn-arrow">↓</span></button>
+      <div class="award-detail"><div class="award-detail-inner">
+        <p class="award-detail-year">2025</p>
+        <p class="award-detail-text">FestiVAL – CBR Comunicación<br>Oro (x2) + Rubí Innovación</p>
+        <p class="award-detail-text">Atrévete ¡Muévete! – Plata</p>
+        <p class="award-detail-year">2023</p>
+        <p class="award-detail-text">Propósito y Principios – Ganador</p>
+      </div></div>
+    </div>
+    <div class="award-item">
+      <button class="award-btn">Codelco <span class="award-btn-arrow">↓</span></button>
+      <div class="award-detail"><div class="award-detail-inner">
+        <p class="award-detail-year">2023</p>
+        <p class="award-detail-text">Planeta Seguridad: Gamificación – Plata</p>
+        <p class="award-detail-text">Vamos Codelco – Ganador</p>
+      </div></div>
+    </div>
+    <div class="award-item">
+      <button class="award-btn">Ecomac <span class="award-btn-arrow">↓</span></button>
+      <div class="award-detail"><div class="award-detail-inner">
+        <p class="award-detail-year">2024</p>
+        <p class="award-detail-text">Gamificación valores – CBR Comunicación – Azul</p>
+      </div></div>
+    </div>
+    <div class="award-item">
+      <button class="award-btn">Falabella <span class="award-btn-arrow">↓</span></button>
+      <div class="award-detail"><div class="award-detail-inner">
+        <p class="award-detail-year">2023</p>
+        <p class="award-detail-text">Valores Compartidos – CBR Comunicación – Bronce</p>
+      </div></div>
+    </div>
+  </div>
 </div>
 
 <div class="layout">
@@ -1123,6 +1226,38 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
     const b = Math.round(0xf0 + (0xaa - 0xf0) * pct);
     fill.style.background = `rgb(${r},${g},${b})`;
   }, { passive: true });
+})();
+</script>
+<script>
+(function() {
+  const isMobile = () => window.innerWidth <= 768;
+  const nav      = document.getElementById('mobileNav');
+  const drawer   = document.getElementById('mobileDrawer');
+  const menuBtn  = document.getElementById('mobileMenuBtn');
+  const awardsBtn   = document.getElementById('mobileAwardsBtn');
+  const awardsPanel = document.getElementById('mobileAwardsPanel');
+
+  function applyMobile() {
+    if (isMobile()) {
+      nav.style.display = 'flex';
+    } else {
+      nav.style.display = 'none';
+      drawer.classList.remove('open');
+      awardsPanel.classList.remove('open');
+    }
+  }
+  applyMobile();
+  window.addEventListener('resize', applyMobile);
+
+  menuBtn.addEventListener('click', () => {
+    drawer.classList.toggle('open');
+    menuBtn.textContent = drawer.classList.contains('open') ? '✕' : '☰';
+    if (!drawer.classList.contains('open')) awardsPanel.classList.remove('open');
+  });
+
+  awardsBtn.addEventListener('click', () => {
+    awardsPanel.classList.toggle('open');
+  });
 })();
 </script>
 </body>
