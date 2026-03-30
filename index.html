@@ -494,6 +494,8 @@ html, body {
     border-bottom: 1px solid #1a1a1a;
     padding: 6px 0;
     position: fixed; top: 56px; left: 0; right: 0; z-index: 499;
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
   }
   .mobile-drawer.open { display: flex; }
   .mobile-drawer a, .mobile-drawer button {
@@ -611,42 +613,42 @@ html, body {
   <a href="https://www.instagram.com/emepecuatro" target="_blank">Instagram</a>
   <a href="https://www.behance.net/emepecuatro" target="_blank">Behance</a>
   <a href="https://www.linkedin.com/in/b%C3%A1rbara-soto-46aa49125/" target="_blank">LinkedIn</a>
-  <button id="mobileAwardsBtn">Premios Eikon</button>
-</div>
-<div class="mobile-awards-panel" id="mobileAwardsPanel">
-  <img src="Eikon.svg" alt="EIKON" class="awards-logo" style="width:60px;margin-bottom:12px;filter:brightness(0) invert(.7)">
-  <div class="awards-tags">
-    <div class="award-item">
-      <button class="award-btn">Saval <span class="award-btn-arrow">↓</span></button>
-      <div class="award-detail"><div class="award-detail-inner">
-        <p class="award-detail-year">2025</p>
-        <p class="award-detail-text">FestiVAL – CBR Comunicación<br>Oro (x2) + Rubí Innovación</p>
-        <p class="award-detail-text">Atrévete ¡Muévete! – Plata</p>
-        <p class="award-detail-year">2023</p>
-        <p class="award-detail-text">Propósito y Principios – Ganador</p>
-      </div></div>
-    </div>
-    <div class="award-item">
-      <button class="award-btn">Codelco <span class="award-btn-arrow">↓</span></button>
-      <div class="award-detail"><div class="award-detail-inner">
-        <p class="award-detail-year">2023</p>
-        <p class="award-detail-text">Planeta Seguridad: Gamificación – Plata</p>
-        <p class="award-detail-text">Vamos Codelco – Ganador</p>
-      </div></div>
-    </div>
-    <div class="award-item">
-      <button class="award-btn">Ecomac <span class="award-btn-arrow">↓</span></button>
-      <div class="award-detail"><div class="award-detail-inner">
-        <p class="award-detail-year">2024</p>
-        <p class="award-detail-text">Gamificación valores – CBR Comunicación – Azul</p>
-      </div></div>
-    </div>
-    <div class="award-item">
-      <button class="award-btn">Falabella <span class="award-btn-arrow">↓</span></button>
-      <div class="award-detail"><div class="award-detail-inner">
-        <p class="award-detail-year">2023</p>
-        <p class="award-detail-text">Valores Compartidos – CBR Comunicación – Bronce</p>
-      </div></div>
+  <button id="mobileAwardsBtn">Premios Eikon ↓</button>
+  <div id="mobileAwardsPanel" style="display:none;padding:12px 20px 16px;border-top:1px solid #1a1a1a">
+    <img src="Eikon.svg" alt="EIKON" style="width:50px;margin-bottom:10px;filter:brightness(0) invert(.7)">
+    <div class="awards-tags">
+      <div class="award-item">
+        <button class="award-btn">Saval <span class="award-btn-arrow">↓</span></button>
+        <div class="award-detail"><div class="award-detail-inner">
+          <p class="award-detail-year">2025</p>
+          <p class="award-detail-text">FestiVAL – CBR Comunicación<br>Oro (x2) + Rubí Innovación</p>
+          <p class="award-detail-text">Atrévete ¡Muévete! – Plata</p>
+          <p class="award-detail-year">2023</p>
+          <p class="award-detail-text">Propósito y Principios – Ganador</p>
+        </div></div>
+      </div>
+      <div class="award-item">
+        <button class="award-btn">Codelco <span class="award-btn-arrow">↓</span></button>
+        <div class="award-detail"><div class="award-detail-inner">
+          <p class="award-detail-year">2023</p>
+          <p class="award-detail-text">Planeta Seguridad: Gamificación – Plata</p>
+          <p class="award-detail-text">Vamos Codelco – Ganador</p>
+        </div></div>
+      </div>
+      <div class="award-item">
+        <button class="award-btn">Ecomac <span class="award-btn-arrow">↓</span></button>
+        <div class="award-detail"><div class="award-detail-inner">
+          <p class="award-detail-year">2024</p>
+          <p class="award-detail-text">Gamificación valores – CBR Comunicación – Azul</p>
+        </div></div>
+      </div>
+      <div class="award-item">
+        <button class="award-btn">Falabella <span class="award-btn-arrow">↓</span></button>
+        <div class="award-detail"><div class="award-detail-inner">
+          <p class="award-detail-year">2023</p>
+          <p class="award-detail-text">Valores Compartidos – CBR Comunicación – Bronce</p>
+        </div></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1261,7 +1263,9 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
   });
 
   awardsBtn.addEventListener('click', () => {
-    awardsPanel.classList.toggle('open');
+    const visible = awardsPanel.style.display === 'block';
+    awardsPanel.style.display = visible ? 'none' : 'block';
+    awardsBtn.textContent = visible ? 'Premios Eikon ↓' : 'Premios Eikon ↑';
   });
 
   // Muestra el nombre en el nav solo cuando el título sale del viewport
