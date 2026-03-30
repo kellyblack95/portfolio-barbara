@@ -477,7 +477,10 @@ html, body {
     font-family: 'Varent Grotesk', var(--font-serif);
     font-size: 1.1rem; font-weight: 700;
     letter-spacing: -0.02em; color: #f0f0f0;
+    opacity: 0;
+    transition: opacity .3s;
   }
+  .mobile-nav-title.visible { opacity: 1; }
   .mobile-menu-btn {
     background: none; border: none; color: #f0f0f0;
     font-size: 20px; padding: 4px 8px; cursor: auto;
@@ -1260,6 +1263,16 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
   awardsBtn.addEventListener('click', () => {
     awardsPanel.classList.toggle('open');
   });
+
+  // Muestra el nombre en el nav solo cuando el título sale del viewport
+  const navTitle = document.querySelector('.mobile-nav-title');
+  const leftName = document.querySelector('.left-name');
+  if (leftName && navTitle) {
+    const obs = new IntersectionObserver(entries => {
+      navTitle.classList.toggle('visible', !entries[0].isIntersecting);
+    }, { threshold: 0 });
+    obs.observe(leftName);
+  }
 })();
 </script>
 </body>
