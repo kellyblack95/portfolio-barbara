@@ -16,7 +16,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --left: 546px;
+  --left: 360px;
   --black: #f0f0f0;
   --gray: #888;
   --border: #E8E8E8;
@@ -90,11 +90,43 @@ html, body {
 
 /* viewer 3d */
 
-.left-name {
-  font-family: 'Varent Grotesk', var(--font-serif); font-size: 7rem;
-  font-weight: 700; line-height: 0.85; letter-spacing: -0.03em;
+/* ══ OJO ══ */
+.name-row {
+  display: flex; align-items: flex-end; gap: 14px;
   margin-bottom: 8px;
+}
+.eye {
+  width: 52px; height: 52px; flex-shrink: 0;
+  border-radius: 50%;
+  background: #f0f0f0;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer !important;
+  transition: transform .1s ease-in, transform .12s ease-out;
+  transform-origin: center center;
+  margin-bottom: 4px;
+}
+.eye.closed {
+  transform: scaleY(0.06);
+}
+.eye-pupil {
+  position: absolute;
+  width: 40%; height: 40%;
+  border-radius: 50%;
+  background: #ff00aa;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform .08s linear;
+  will-change: transform;
+}
+
+.left-name {
+  font-family: 'Varent Grotesk', var(--font-serif); font-size: 4.5rem;
+  font-weight: 700; line-height: 0.85; letter-spacing: -0.03em;
+  margin-bottom: 0;
   position: relative; z-index: 3;
+  cursor: pointer !important;
+  transition: opacity .15s;
 }
 .left-name .char {
   display: inline-block;
@@ -107,17 +139,17 @@ html, body {
 }
 .left-role {
   font-size: 8.5px; letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--gray); margin-bottom: 18px;
+  color: var(--gray); margin-bottom: 10px;
   opacity: 0; animation: up .6s .2s both;
 }
 .rule {
-  width: 16px; height: 1px; background: #f0f0f0;
-  margin-bottom: 14px; flex-shrink: 0;
+  width: 100%; height: 1px; background: #2a2a2a;
+  margin: 14px 0 16px; flex-shrink: 0;
   opacity: 0; animation: up .6s .28s both;
 }
 .left-bio {
   font-size: 12px; line-height: 1.8; color: #888; overflow: hidden;
-  max-width: 340px;
+  max-width: 280px;
   opacity: 0; animation: up .6s .34s both;
 }
 .awards-separator {
@@ -128,26 +160,48 @@ html, body {
   opacity: 0; animation: up .6s .4s both;
 }
 .awards-logo {
-  width: 60px; margin-bottom: 12px;
+  width: 80px; margin-bottom: 14px;
   filter: brightness(0) invert(.7);
 }
-.awards-list {
-  max-width: 340px;
+.awards-tags {
+  display: flex; flex-direction: column; gap: 0;
 }
-.awards-heading {
-  font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--gray); margin-bottom: 10px;
+.award-item {
+  border-top: 1px solid #1e1e1e;
 }
-.awards-year {
-  font-size: 8.5px; letter-spacing: 0.15em; text-transform: uppercase;
-  color: #bbb; font-weight: 700; margin-top: 16px; margin-bottom: 4px;
+.award-item:last-child { border-bottom: 1px solid #1e1e1e; }
+.award-btn {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: #666; background: transparent; border: none;
+  padding: 9px 0; cursor: none;
+  transition: color .2s;
 }
-.awards-item {
-  font-size: 10px; line-height: 1.6; color: #666;
-  margin-bottom: 3px;
+.award-btn:hover { color: #f0f0f0; }
+.award-btn-arrow {
+  font-size: 9px; color: #333;
+  transition: transform .25s, color .2s;
+  flex-shrink: 0;
 }
-.awards-item strong {
-  color: #bbb; font-weight: 600;
+.award-item.open .award-btn { color: #ff00aa; }
+.award-item.open .award-btn-arrow { transform: rotate(180deg); color: #ff00aa; }
+.award-detail {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .3s cubic-bezier(0.4,0,0.2,1);
+}
+.award-item.open .award-detail { max-height: 200px; }
+.award-detail-inner {
+  padding: 0 0 12px;
+}
+.award-detail-year {
+  font-size: 7.5px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: #444; margin-bottom: 4px; margin-top: 4px;
+}
+.award-detail-text {
+  font-size: 9.5px; line-height: 1.5; color: #888;
+  letter-spacing: 0; text-transform: none;
 }
 .left-header {
   padding: 18px 28px 12px;
@@ -167,9 +221,11 @@ html, body {
 }
 .socials-bottom a {
   font-size: 8.5px; letter-spacing: 0.2em; text-transform: uppercase;
+  font-weight: 600;
   color: var(--gray); text-decoration: none; transition: color .2s;
+  padding: 10px 6px;
 }
-.socials-bottom a:hover { color: var(--black); }
+.socials-bottom a:hover { color: #ff00aa; }
 .cv-btn {
   display: inline-flex; align-items: center; gap: 7px;
   font-size: 8.5px; letter-spacing: 0.24em; text-transform: uppercase;
@@ -177,7 +233,7 @@ html, body {
   padding: 8px 13px; text-decoration: none; width: fit-content;
   transition: background .2s, color .2s;
 }
-.cv-btn:hover { background: var(--black); color: #fff; }
+.cv-btn:hover { background: transparent; color: #ff00aa; border-color: #ff00aa; }
 
 /* ══ COLUMNA DERECHA ══ */
 .right {
@@ -187,10 +243,40 @@ html, body {
   background-image: radial-gradient(circle, #333 1px, transparent 1px);
   background-size: 28px 28px;
   scrollbar-width: thin; scrollbar-color: #333 transparent;
-  padding-left: 120px;
+  padding-left: 60px;
 }
 .right::-webkit-scrollbar { width: 3px; }
 .right::-webkit-scrollbar-thumb { background: #333; }
+
+/* ══ LÍNEA DE PROGRESO ══ */
+.scroll-line {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  z-index: 9999;
+  pointer-events: none;
+}
+.scroll-line-track {
+  position: absolute;
+  inset: 0;
+  background: #1e1e1e;
+}
+.scroll-line-fill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 0%;
+  background: #f0f0f0;
+  transition: width .05s linear;
+}
+
+/* ══ OVERVIEW ══ */
+.overview {
+  padding: 80px 20px 0;
+}
+.overview-grid {
+  display: flex; flex-direction: column; gap: var(--gap);
+  width: 100%;
+}
 
 /* ══ PROYECTO ══ */
 .project {
@@ -222,20 +308,20 @@ html, body {
 
 .proj-title { color: #f0f0f0;
   font-family: var(--font-serif);
-  font-size: clamp(1.35rem, 2vw, 1.9rem);
+  font-size: clamp(1rem, 1.4vw, 1.3rem);
   font-weight: 400; line-height: 1.08;
   letter-spacing: -0.02em;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 .proj-title em { font-style: italic; }
 
 .proj-desc {
-  font-size: 11.5px; line-height: 1.85; color: #888;
+  font-size: 10px; line-height: 1.5; color: #888;
 }
 .proj-desc strong { font-weight: 400; color: #666; }
 
 /* ══ GRID ══ */
-.grid { display: flex; flex-direction: column; gap: var(--gap); width: 70%; }
+.grid { display: flex; flex-direction: column; gap: var(--gap); width: 88%; }
 
 .row {
   display: grid; gap: var(--gap);
@@ -420,25 +506,47 @@ html, body {
     <div class="left-overlay">
       <div class="left-fade"></div>
       <div class="left-body">
-        <h1 class="left-name">Kelly</h1>
+        <div class="name-row">
+          <h1 class="left-name">Bár<br>bara</h1>
+          <div class="eye"><div class="eye-pupil" id="eyePupil"></div></div>
+        </div>
         <p class="left-role">Directora de Arte</p>
         <div class="rule"></div>
-        <p class="left-bio">Diseño experiencias visuales con precisión y carácter. Especializada en dirección de arte para marcas, editoriales y proyectos audiovisuales.</p>
-        <div class="awards-separator"></div>
         <div class="awards-section">
           <img src="Eikon.svg" alt="EIKON" class="awards-logo">
-          <div class="awards-list">
-            <p class="awards-heading"><strong>Reconocimientos</strong></p>
-            <p class="awards-year">2025</p>
-            <p class="awards-item"><strong>Laboratorios SAVAL</strong> – FestiVAL – CBR Comunicación – Oro (x2) + Rubí Innovación</p>
-            <p class="awards-item"><strong>Laboratorios SAVAL</strong> – Atrévete ¡Muévete por tu desarrollo! – CBR Comunicación – Plata</p>
-            <p class="awards-year">2024</p>
-            <p class="awards-item"><strong>ECOMAC</strong> – Gamificación valores – CBR Comunicación – Azul</p>
-            <p class="awards-year">2023</p>
-            <p class="awards-item"><strong>Codelco</strong> – Planeta Seguridad: Gamificación – CBR Comunicación – Plata</p>
-            <p class="awards-item"><strong>Falabella</strong> – Valores Compartidos – CBR Comunicación – Bronce</p>
-            <p class="awards-item"><strong>Laboratorios SAVAL</strong> – Propósito y Principios – CBR Comunicación – Ganador</p>
-            <p class="awards-item"><strong>Codelco</strong> – Vamos Codelco – CBR Comunicación – Ganador</p>
+          <div class="awards-tags">
+            <div class="award-item">
+              <button class="award-btn">Saval <span class="award-btn-arrow">↓</span></button>
+              <div class="award-detail"><div class="award-detail-inner">
+                <p class="award-detail-year">2025</p>
+                <p class="award-detail-text">FestiVAL – CBR Comunicación<br>Oro (x2) + Rubí Innovación</p>
+                <p class="award-detail-text">Atrévete ¡Muévete! – Plata</p>
+                <p class="award-detail-year">2023</p>
+                <p class="award-detail-text">Propósito y Principios – Ganador</p>
+              </div></div>
+            </div>
+            <div class="award-item">
+              <button class="award-btn">Codelco <span class="award-btn-arrow">↓</span></button>
+              <div class="award-detail"><div class="award-detail-inner">
+                <p class="award-detail-year">2023</p>
+                <p class="award-detail-text">Planeta Seguridad: Gamificación – Plata</p>
+                <p class="award-detail-text">Vamos Codelco – Ganador</p>
+              </div></div>
+            </div>
+            <div class="award-item">
+              <button class="award-btn">Ecomac <span class="award-btn-arrow">↓</span></button>
+              <div class="award-detail"><div class="award-detail-inner">
+                <p class="award-detail-year">2024</p>
+                <p class="award-detail-text">Gamificación valores – CBR Comunicación – Azul</p>
+              </div></div>
+            </div>
+            <div class="award-item">
+              <button class="award-btn">Falabella <span class="award-btn-arrow">↓</span></button>
+              <div class="award-detail"><div class="award-detail-inner">
+                <p class="award-detail-year">2023</p>
+                <p class="award-detail-text">Valores Compartidos – CBR Comunicación – Bronce</p>
+              </div></div>
+            </div>
           </div>
         </div>
       </div>
@@ -449,6 +557,27 @@ html, body {
 
 <!-- ══ DERECHA ══ -->
 <main class="right">
+
+  <!-- ━━ OVERVIEW ━━ -->
+  <div class="overview">
+    <div class="overview-grid">
+      <div class="row c3">
+        <div class="piece" style="aspect-ratio:4/3;background:#1a1a1a"><img src="images/overview-1.jpg" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#1a1a1a"><video src="images/overview-2.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#1a1a1a"><video src="images/overview-3.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
+      </div>
+      <div class="row c4">
+        <div class="piece" style="aspect-ratio:1/1;background:#1a1a1a"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#1a1a1a"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#1a1a1a"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#1a1a1a"></div>
+      </div>
+      <div class="row c2">
+        <div class="piece" style="aspect-ratio:16/9;background:#1a1a1a"></div>
+        <div class="piece" style="aspect-ratio:16/9;background:#1a1a1a"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- ━━ PROYECTO 1 ━━ -->
   <div class="project">
@@ -739,7 +868,7 @@ document.querySelectorAll('.project').forEach(p=>{
 }
 #lb.open { display: flex !important; }
 #lb-content { display: flex; align-items: center; justify-content: center; }
-#lb-content img {
+#lb-content img, #lb-content video {
   max-width: 85vw;
   max-height: 85vh;
   object-fit: contain;
@@ -798,9 +927,19 @@ function showPiece(index) {
   if (!piece) return;
   currentIndex = index;
   var img = piece.querySelector('img');
+  var video = piece.querySelector('video');
   var canvas = piece.querySelector('canvas');
   lbContent.innerHTML = '';
-  if (img) {
+  if (video) {
+    var clone = document.createElement('video');
+    clone.src = video.src;
+    clone.autoplay = true;
+    clone.loop = true;
+    clone.muted = true;
+    clone.playsInline = true;
+    clone.controls = true;
+    lbContent.appendChild(clone);
+  } else if (img) {
     var clone = new Image();
     clone.src = img.src;
     lbContent.appendChild(clone);
@@ -865,15 +1004,71 @@ document.onkeydown = function(e) {
   if (e.key === 'ArrowRight') lbNext.onclick(e);
 };
 </script>
+<div class="scroll-line">
+  <div class="scroll-line-track"></div>
+  <div class="scroll-line-fill" id="scrollFill"></div>
+</div>
 <div class="socials-bottom">
-  <a href="#" target="_blank">Instagram</a>
-  <a href="#" target="_blank">Behance</a>
-  <a href="#" target="_blank">LinkedIn</a>
+  <a href="https://www.instagram.com/emepecuatro" target="_blank">Instagram</a>
+  <a href="https://www.behance.net/emepecuatro" target="_blank">Behance</a>
+  <a href="https://www.linkedin.com/in/b%C3%A1rbara-soto-46aa49125/" target="_blank">LinkedIn</a>
 </div>
 <script>
 document.getElementById('splash').addEventListener('click', function() {
   this.classList.add('hidden');
 });
+</script>
+<script>
+document.querySelectorAll('.award-item .award-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.award-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.award-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+</script>
+<script>
+(function() {
+  const eye   = document.querySelector('.eye');
+  const pupil = document.getElementById('eyePupil');
+
+  document.addEventListener('mousemove', e => {
+    if (eye.classList.contains('closed')) return;
+    const r    = eye.getBoundingClientRect();
+    const cx   = r.left + r.width  / 2;
+    const cy   = r.top  + r.height / 2;
+    const dx   = e.clientX - cx;
+    const dy   = e.clientY - cy;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const max  = r.width * 0.28;
+    const ratio = Math.min(dist, max) / (dist || 1);
+    pupil.style.transform = `translate(calc(-50% + ${dx*ratio}px), calc(-50% + ${dy*ratio}px))`;
+  });
+
+  eye.addEventListener('click', () => {
+    if (eye.classList.contains('closed')) return;
+    eye.classList.add('closed');
+    setTimeout(() => {
+      eye.classList.remove('closed');
+    }, 180);
+  });
+})();
+</script>
+<script>
+(function() {
+  const fill = document.getElementById('scrollFill');
+  const right = document.querySelector('.right');
+  right.addEventListener('scroll', () => {
+    const pct = right.scrollTop / (right.scrollHeight - right.clientHeight);
+    fill.style.width = (pct * 100) + '%';
+    // Interpola blanco #f0f0f0 → amarillo #ff00aa
+    const r = Math.round(0xf0 + (0xff - 0xf0) * pct);
+    const g = Math.round(0xf0 + (0x00 - 0xf0) * pct);
+    const b = Math.round(0xf0 + (0xaa - 0xf0) * pct);
+    fill.style.background = `rgb(${r},${g},${b})`;
+  }, { passive: true });
+})();
 </script>
 </body>
 </html>
