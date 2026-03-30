@@ -454,6 +454,9 @@ html, body {
 .piece { opacity: 0; animation: up .45s both; }
 
 /* Responsive */
+/* Mobile-only elements: ocultos en desktop */
+.mobile-nav, .mobile-drawer { display: none; }
+
 @media (max-width: 768px) {
   /* ── Base ── */
   html, body { overflow: auto; height: auto; }
