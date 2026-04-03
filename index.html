@@ -17,7 +17,7 @@
 
 :root {
   --left: 360px;
-  --black: #f0f0f0;
+  --black: #111;
   --gray: #888;
   --border: #E8E8E8;
   --radius: 10px;
@@ -30,19 +30,20 @@
 
 .cur {
   position: fixed;
-  width: 26px; height: 26px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #ff00aa;
   pointer-events: none;
   z-index: 9999999;
   left: 0; top: 0;
-  margin-left: -13px; margin-top: -13px;
+  margin-left: -4px; margin-top: -4px;
   will-change: transform;
 }
-.cur svg { width: 100%; height: 100%; display: block; }
 
 html, body {
   height: 100%; overflow: hidden;
   font-family: var(--font-sans);
-  color: var(--black); background: #0a0a0a;
+  color: var(--black); background: #f8f8f8;
 }
 
 .layout { display: flex; height: 100vh; }
@@ -50,7 +51,7 @@ html, body {
 /* ══ COLUMNA IZQUIERDA ══ */
 .left {
   width: var(--left); min-width: var(--left);
-  height: 100vh; background-color: #0a0a0a; background-image: radial-gradient(circle, #333 1px, transparent 1px); background-size: 28px 28px;
+  height: 100vh; background-color: #f8f8f8; background-image: radial-gradient(circle, #ccc 1px, transparent 1px); background-size: 28px 28px;
   border-right: none;
   display: flex; flex-direction: column;
   overflow: hidden; z-index: 5; flex-shrink: 0;
@@ -98,7 +99,7 @@ html, body {
 .eye {
   width: 52px; height: 52px; flex-shrink: 0;
   border-radius: 50%;
-  background: #f0f0f0;
+  background: #111;
   position: relative;
   overflow: hidden;
   cursor: pointer !important;
@@ -113,7 +114,7 @@ html, body {
   position: absolute;
   width: 40%; height: 40%;
   border-radius: 50%;
-  background: #ff00aa;
+  background: #fff;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   transition: transform .08s linear;
@@ -143,7 +144,7 @@ html, body {
   opacity: 0; animation: up .6s .2s both;
 }
 .rule {
-  width: 100%; height: 1px; background: #2a2a2a;
+  width: 100%; height: 1px; background: #ddd;
   margin: 14px 0 16px; flex-shrink: 0;
   opacity: 0; animation: up .6s .28s both;
 }
@@ -153,7 +154,7 @@ html, body {
   opacity: 0; animation: up .6s .34s both;
 }
 .awards-separator {
-  width: 100%; height: 1px; background: #333;
+  width: 100%; height: 1px; background: #e0e0e0;
   margin: 20px 0;
 }
 .awards-section {
@@ -161,15 +162,15 @@ html, body {
 }
 .awards-logo {
   width: 80px; margin-bottom: 14px;
-  filter: brightness(0) invert(.7);
+  filter: brightness(0);
 }
 .awards-tags {
   display: flex; flex-direction: column; gap: 0;
 }
 .award-item {
-  border-top: 1px solid #1e1e1e;
+  border-top: 1px solid #e0e0e0;
 }
-.award-item:last-child { border-bottom: 1px solid #1e1e1e; }
+.award-item:last-child { border-bottom: 1px solid #e0e0e0; }
 .award-btn {
   width: 100%;
   display: flex; align-items: center; justify-content: space-between;
@@ -178,9 +179,9 @@ html, body {
   padding: 9px 0; cursor: none;
   transition: color .2s;
 }
-.award-btn:hover { color: #f0f0f0; }
+.award-btn:hover { color: #111; }
 .award-btn-arrow {
-  font-size: 9px; color: #333;
+  font-size: 9px; color: #bbb;
   transition: transform .25s, color .2s;
   flex-shrink: 0;
 }
@@ -229,7 +230,7 @@ html, body {
 .cv-btn {
   display: inline-flex; align-items: center; gap: 7px;
   font-size: 8.5px; letter-spacing: 0.24em; text-transform: uppercase;
-  color: var(--black); border: 1px solid #444;
+  color: var(--black); border: 1px solid #bbb;
   padding: 8px 13px; text-decoration: none; width: fit-content;
   transition: background .2s, color .2s;
 }
@@ -239,14 +240,14 @@ html, body {
 .right {
   flex: 1; height: 100vh;
   overflow-y: auto; overflow-x: hidden;
-  background-color: #0a0a0a;
-  background-image: radial-gradient(circle, #333 1px, transparent 1px);
+  background-color: #f8f8f8;
+  background-image: radial-gradient(circle, #ccc 1px, transparent 1px);
   background-size: 28px 28px;
-  scrollbar-width: thin; scrollbar-color: #333 transparent;
+  scrollbar-width: thin; scrollbar-color: #bbb transparent;
   padding-left: 60px;
 }
 .right::-webkit-scrollbar { width: 3px; }
-.right::-webkit-scrollbar-thumb { background: #333; }
+.right::-webkit-scrollbar-thumb { background: #bbb; }
 
 /* ══ LÍNEA DE PROGRESO ══ */
 .scroll-line {
@@ -259,13 +260,13 @@ html, body {
 .scroll-line-track {
   position: absolute;
   inset: 0;
-  background: #1e1e1e;
+  background: #e0e0e0;
 }
 .scroll-line-fill {
   position: absolute;
   top: 0; left: 0; bottom: 0;
   width: 0%;
-  background: #f0f0f0;
+  background: #111;
   transition: width .05s linear;
 }
 
@@ -306,7 +307,7 @@ html, body {
   margin-bottom: 8px;
 }
 
-.proj-title { color: #f0f0f0;
+.proj-title { color: #111;
   font-family: var(--font-serif);
   font-size: clamp(1rem, 1.4vw, 1.3rem);
   font-weight: 400; line-height: 1.08;
@@ -346,7 +347,7 @@ html, body {
 
 .piece {
   border-radius: var(--radius); overflow: hidden;
-  background: #1a1a1a; display: block;
+  background: #e8e8e8; display: block;
   position: relative; z-index: 10; cursor: pointer;
 }
 .piece canvas, .piece img, .piece video {
@@ -362,12 +363,12 @@ html, body {
 .tall { aspect-ratio: 2/3; }
 
 /* Fondos pastel */
-.bg1  { background: #1a1a1a; } .bg2  { background: #111; }
-.bg3  { background: #151515; } .bg4  { background: #131313; }
-.bg5  { background: #161616; } .bg6  { background: #171717; }
-.bg7  { background: #141414; } .bg8  { background: #121212; }
-.bg9  { background: #181818; } .bg10 { background: #161616; }
-.bg11 { background: #131313; } .bg12 { background: #171717; }
+.bg1  { background: #e8e8e8; } .bg2  { background: #efefef; }
+.bg3  { background: #eaeaea; } .bg4  { background: #ececec; }
+.bg5  { background: #e9e9e9; } .bg6  { background: #e7e7e7; }
+.bg7  { background: #ebebeb; } .bg8  { background: #ededed; }
+.bg9  { background: #e6e6e6; } .bg10 { background: #e9e9e9; }
+.bg11 { background: #ececec; } .bg12 { background: #e7e7e7; }
 
 
 /* ── Splash screen ── */
@@ -375,7 +376,7 @@ html, body {
   position: fixed;
   inset: 0;
   z-index: 999999;
-  background: #0a0a0a;
+  background: #f8f8f8;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -402,7 +403,7 @@ html, body {
   font-family: 'Varent Grotesk', var(--font-serif);
   font-size: 6rem;
   font-weight: 700;
-  color: #f0f0f0;
+  color: #111;
   line-height: 0.85;
   text-align: center;
   letter-spacing: -0.03em;
@@ -418,7 +419,7 @@ html, body {
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #666;
+  color: #555;
   opacity: 0;
   animation: splashFadeIn .8s .8s ease forwards;
 }
@@ -440,7 +441,7 @@ html, body {
   margin-bottom: 8px;
 }
 
-.proj-title { color: #f0f0f0;
+.proj-title { color: #111;
   opacity: 0;
   filter: blur(8px);
   transform: translateY(10px);
@@ -478,20 +479,20 @@ html, body {
     justify-content: space-between;
     padding: 16px 20px;
     position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-    background: #0a0a0a;
-    border-bottom: 1px solid #1a1a1a;
+    background: #f8f8f8;
+    border-bottom: 1px solid #e0e0e0;
   }
   .layout { padding-top: 56px; }
   .mobile-nav-title {
     font-family: 'Varent Grotesk', var(--font-serif);
     font-size: 1.1rem; font-weight: 700;
-    letter-spacing: -0.02em; color: #f0f0f0;
+    letter-spacing: -0.02em; color: #111;
     opacity: 0;
     transition: opacity .3s;
   }
   .mobile-nav-title.visible { opacity: 1; }
   .mobile-menu-btn {
-    background: none; border: none; color: #f0f0f0;
+    background: none; border: none; color: #111;
     font-size: 20px; padding: 4px 8px; cursor: auto;
     line-height: 1;
   }
@@ -499,8 +500,8 @@ html, body {
     display: none;
     flex-direction: column;
     gap: 0;
-    background: #0d0d0d;
-    border-bottom: 1px solid #1a1a1a;
+    background: #f8f8f8;
+    border-bottom: 1px solid #e0e0e0;
     padding: 6px 0;
     position: fixed; top: 56px; left: 0; right: 0; z-index: 499;
     max-height: calc(100vh - 56px);
@@ -513,7 +514,7 @@ html, body {
     background: none; border: none;
     padding: 14px 20px; text-decoration: none;
     text-align: left; width: 100%;
-    border-bottom: 1px solid #1a1a1a;
+    border-bottom: 1px solid #e0e0e0;
     transition: color .2s;
   }
   .mobile-drawer a:last-child,
@@ -524,8 +525,8 @@ html, body {
   .mobile-awards-panel {
     display: none;
     padding: 20px;
-    background: #0d0d0d;
-    border-bottom: 1px solid #1a1a1a;
+    background: #f8f8f8;
+    border-bottom: 1px solid #e0e0e0;
   }
   .mobile-awards-panel.open { display: block; }
 
@@ -607,11 +608,7 @@ html, body {
 </div>
 
 <!-- Cursor -->
-<div class="cur" id="cur">
-  <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-    <path fill="#ff00aa" d="M25.75,47.38h-1.55c-.16-6.28-1.12-10.68-2.87-13.19-3.08.56-7.23,2.9-12.44,7.02-.38-.38-.8-.75-1.27-1.13,4.81-4.65,7.51-8.51,8.1-11.59-1.1-.72-2.63-1.31-4.59-1.77-1.96-.45-3.6-.75-4.9-.87-1.3-.13-3.02-.25-5.16-.38v-1.23c7.26-.44,12.14-1.44,14.65-3.02-.53-2.86-3.14-6.82-7.82-11.87l.99-.94c5.37,4.24,9.55,6.64,12.53,7.21,1.7-2.26,2.62-6.6,2.78-13h1.55c.16,6.35,1.1,10.68,2.83,13,2.98-.56,7.16-2.97,12.53-7.21l.94.94c-4.68,5.06-7.29,8.98-7.82,11.78,2.64,1.63,7.54,2.67,14.7,3.11v1.23c-2.14.13-3.86.25-5.16.38-1.3.13-2.94.42-4.92.87-1.98.46-3.52,1.05-4.62,1.77.6,3.05,3.31,6.91,8.15,11.59-.47.38-.9.75-1.27,1.13-5.22-4.11-9.36-6.45-12.44-7.02-1.79,2.54-2.76,6.94-2.92,13.19Z"/>
-  </svg>
-</div>
+<div class="cur" id="cur"></div>
 
 <!-- ══ MOBILE NAV (solo mobile) ══ -->
 <nav class="mobile-nav" id="mobileNav" style="display:none">
@@ -624,8 +621,8 @@ html, body {
   <a href="https://www.behance.net/emepecuatro" target="_blank">Behance</a>
   <a href="https://www.linkedin.com/in/b%C3%A1rbara-soto-46aa49125/" target="_blank">LinkedIn</a>
   <button id="mobileAwardsBtn">Premios Eikon ↓</button>
-  <div id="mobileAwardsPanel" style="display:none;padding:12px 20px 16px;border-top:1px solid #1a1a1a">
-    <img src="Eikon.svg" alt="EIKON" style="width:50px;margin-bottom:10px;filter:brightness(0) invert(.7)">
+  <div id="mobileAwardsPanel" style="display:none;padding:12px 20px 16px;border-top:1px solid #e0e0e0">
+    <img src="Eikon.svg" alt="EIKON" style="width:50px;margin-bottom:10px;filter:brightness(0)">
     <div class="awards-tags">
       <div class="award-item">
         <button class="award-btn">Saval <span class="award-btn-arrow">↓</span></button>
@@ -737,19 +734,19 @@ html, body {
   <div class="overview">
     <div class="overview-grid">
       <div class="row c3">
-        <div class="piece" style="aspect-ratio:4/3;background:#1a1a1a"><img src="images/overview-1.jpg" style="width:100%;height:100%;object-fit:cover;display:block"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#1a1a1a"><video src="images/overview-2.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#1a1a1a"><video src="images/overview-3.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#e8e8e8"><img src="images/overview-1.jpg" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#e8e8e8"><video src="images/overview-2.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#e8e8e8"><video src="images/overview-3.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
       </div>
       <div class="row c4">
-        <div class="piece" style="aspect-ratio:1/1;background:#1a1a1a"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#1a1a1a"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#1a1a1a"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#1a1a1a"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#e8e8e8"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#e8e8e8"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#e8e8e8"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#e8e8e8"></div>
       </div>
       <div class="row c2">
-        <div class="piece" style="aspect-ratio:16/9;background:#1a1a1a"></div>
-        <div class="piece" style="aspect-ratio:16/9;background:#1a1a1a"></div>
+        <div class="piece" style="aspect-ratio:16/9;background:#e8e8e8"></div>
+        <div class="piece" style="aspect-ratio:16/9;background:#e8e8e8"></div>
       </div>
     </div>
   </div>
@@ -891,7 +888,7 @@ html, body {
 /* ── Cursor directo sin lag ── */
 const cur = document.getElementById('cur');
 document.addEventListener('mousemove', e => {
-  cur.style.transform = `translate(${e.clientX - 13}px, ${e.clientY - 13}px)`;
+  cur.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
 }, { passive: true });
 
 
@@ -1216,7 +1213,7 @@ document.getElementById('splash').addEventListener('click', function() {
           x: c * GAP, y: r * GAP,
           phase: Math.random() * Math.PI * 2,
           speed: 0.6 + Math.random() * 1.4,
-          base:  0.12 + Math.random() * 0.12,
+          base:  0.18 + Math.random() * 0.14,
           lit: 0
         });
       }
@@ -1236,7 +1233,7 @@ document.getElementById('splash').addEventListener('click', function() {
       const radius = R + d.lit * 1.2;
       ctx.beginPath();
       ctx.arc(d.x, d.y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(240,240,240,${Math.min(alpha, 1).toFixed(3)})`;
+      ctx.fillStyle = `rgba(160,160,160,${Math.min(alpha, 1).toFixed(3)})`;
       ctx.fill();
     }
     raf = requestAnimationFrame(draw);
@@ -1296,9 +1293,9 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
     const pct = right.scrollTop / (right.scrollHeight - right.clientHeight);
     fill.style.width = (pct * 100) + '%';
     // Interpola blanco #f0f0f0 → amarillo #ff00aa
-    const r = Math.round(0xf0 + (0xff - 0xf0) * pct);
-    const g = Math.round(0xf0 + (0x00 - 0xf0) * pct);
-    const b = Math.round(0xf0 + (0xaa - 0xf0) * pct);
+    const r = Math.round(0x11 + (0xff - 0x11) * pct);
+    const g = Math.round(0x11 + (0x00 - 0x11) * pct);
+    const b = Math.round(0x11 + (0xaa - 0x11) * pct);
     fill.style.background = `rgb(${r},${g},${b})`;
   }, { passive: true });
 })();
