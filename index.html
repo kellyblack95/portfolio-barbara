@@ -1196,8 +1196,8 @@ document.getElementById('splash').addEventListener('click', function() {
 (function() {
   const canvas = document.getElementById('splash-dots');
   const ctx    = canvas.getContext('2d');
-  const GAP    = 28;
-  const R      = 1.2;
+  const GAP    = 44;
+  const R      = 0.8;
   let cols, rows, dots, raf;
 
   function resize() {
@@ -1212,8 +1212,8 @@ document.getElementById('splash').addEventListener('click', function() {
           x: c * GAP,
           y: r * GAP,
           phase: Math.random() * Math.PI * 2,
-          speed: 0.4 + Math.random() * 0.6,
-          base:  0.08 + Math.random() * 0.18
+          speed: 0.6 + Math.random() * 1.4,
+          base:  0.03 + Math.random() * 0.08
         });
       }
     }
@@ -1223,7 +1223,8 @@ document.getElementById('splash').addEventListener('click', function() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const secs = t * 0.001;
     for (const d of dots) {
-      const alpha = d.base + (1 - d.base) * 0.5 * (1 + Math.sin(secs * d.speed + d.phase));
+      const wave  = Math.sin(secs * d.speed + d.phase);
+      const alpha = wave > 0.6 ? d.base + (1 - d.base) * ((wave - 0.6) / 0.4) : d.base;
       ctx.beginPath();
       ctx.arc(d.x, d.y, R, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(240,240,240,${alpha.toFixed(3)})`;
