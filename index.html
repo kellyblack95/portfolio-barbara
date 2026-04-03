@@ -20,7 +20,7 @@
   --gray: #888;
   --border: #E8E8E8;
   --radius: 10px;
-  --gap: 5px;
+  --gap: 14px;
   --font-serif: 'Playfair Display', serif;
   --font-sans: 'DM Sans', sans-serif;
 }
@@ -54,9 +54,8 @@ html, body {
   align-items: center;
   gap: 32px;
   padding: 0 40px;
-  height: 64px;
-  background: #f8f8f8;
-  border-bottom: 1px solid #e0e0e0;
+  height: 90px;
+  background: transparent;
 }
 .top-bar-left {
   display: flex;
@@ -66,7 +65,7 @@ html, body {
 }
 .site-name {
   font-family: 'Varent Grotesk', var(--font-serif);
-  font-size: 1.5rem;
+  font-size: 5rem;
   font-weight: 700;
   letter-spacing: -0.03em;
   white-space: nowrap;
@@ -91,12 +90,23 @@ html, body {
   animation: up .5s .2s both;
 }
 .top-bar-nav a:hover, .top-bar-nav button:hover { color: #ff00aa; }
+.top-bar.scrolled {
+  background: rgba(248,248,248,0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid #e0e0e0;
+}
+html.dark .top-bar.scrolled {
+  background: rgba(10,10,10,0.92);
+  border-bottom: 1px solid #2a2a2a;
+}
 
 /* ══ OJO ══ */
 .eye {
   width: 52px; height: 52px; flex-shrink: 0;
   border-radius: 50%;
-  background: #111;
+  background: #fff;
+  border: 2px solid #111;
   position: relative;
   overflow: hidden;
   cursor: pointer !important;
@@ -111,7 +121,7 @@ html, body {
   position: absolute;
   width: 40%; height: 40%;
   border-radius: 50%;
-  background: #fff;
+  background: #111;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   transition: transform .08s linear;
@@ -193,9 +203,34 @@ html, body {
 }
 .cv-btn:hover { background: transparent; color: #ff00aa; border-color: #ff00aa; }
 
+/* ══ DARK MODE ══ */
+html.dark { --black: #f0f0f0; }
+html.dark body { background: #0a0a0a; color: #f0f0f0; }
+html.dark .main-content {
+  background-color: #0a0a0a;
+  background-image: radial-gradient(circle, #333 1px, transparent 1px);
+  scrollbar-color: #333 transparent;
+}
+html.dark .main-content::-webkit-scrollbar-thumb { background: #333; }
+html.dark .eye { background: #111; border-color: #f0f0f0; }
+html.dark .eye-pupil { background: #f0f0f0; }
+html.dark .awards-panel { background: #111; border-color: #2a2a2a; }
+html.dark .awards-separator { background: #2a2a2a; }
+html.dark .award-item { border-top-color: #2a2a2a; }
+html.dark .award-item:last-child { border-bottom-color: #2a2a2a; }
+html.dark .award-btn { color: #666; }
+html.dark .award-btn:hover { color: #f0f0f0; }
+html.dark .award-btn-arrow { color: #444; }
+html.dark .award-detail-year { color: #555; }
+html.dark .award-detail-text { color: #666; }
+html.dark .awards-logo { filter: brightness(0) invert(1); }
+html.dark .scroll-line-track { background: #1e1e1e; }
+html.dark .scroll-line-fill { background: #f0f0f0; }
+html.dark .cv-btn { border-color: #444; }
+
 /* ══ CONTENIDO PRINCIPAL ══ */
 .main-content {
-  padding-top: 64px;
+  padding-top: 90px;
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
@@ -240,10 +275,9 @@ html, body {
 
 /* ══ PROYECTO ══ */
 .project {
-  /* Espacio entre proyectos */
-  padding: 120px 20px 0;
+  padding: var(--gap) 20px 0;
 }
-.project:last-child { padding-bottom: 180px; }
+.project:last-child { padding-bottom: 40px; }
 
 /* ══ GRID ══ */
 .grid { display: flex; flex-direction: column; gap: var(--gap); width: 100%; }
@@ -251,12 +285,8 @@ html, body {
 .row {
   display: grid; gap: var(--gap);
   width: 100%;
-  align-items: stretch;
+  align-items: start;
 }
-
-/* Filas con altura fija — para cuando las piezas tienen proporciones distintas */
-.row.rh { height: var(--rh, 240px); }
-.row.rh .piece { aspect-ratio: unset !important; height: 100%; }
 
 /* Layouts */
 .c1  { grid-template-columns: 1fr; }
@@ -374,15 +404,15 @@ html, body {
   /* ── Top bar mobile ── */
   .top-bar {
     padding: 0 20px;
-    height: 56px;
+    height: 64px;
     gap: 16px;
   }
-  .site-name { font-size: 1.2rem; }
+  .site-name { font-size: 2rem; }
   .top-bar-nav { gap: 14px; }
 
   /* ── Contenido principal mobile ── */
   .main-content {
-    padding-top: 56px;
+    padding-top: 64px;
     height: auto;
     overflow: visible;
     padding-left: 0;
@@ -477,20 +507,16 @@ html, body {
   <!-- ━━ OVERVIEW ━━ -->
   <div class="overview">
     <div class="overview-grid">
-      <div class="row c3">
-        <div class="piece" style="aspect-ratio:4/3;background:#e8e8e8"><img src="images/overview-1.jpg" style="width:100%;height:100%;object-fit:cover;display:block"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#e8e8e8"><video src="images/overview-2.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#e8e8e8"><video src="images/overview-3.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
-      </div>
       <div class="row c4">
-        <div class="piece" style="aspect-ratio:1/1;background:#e8e8e8"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#e8e8e8"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#e8e8e8"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#e8e8e8"></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#e8e8e8"><img src="images/overview-1.jpg" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#e8e8e8"><video src="images/overview-2.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#e8e8e8"><video src="images/overview-3.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#e0e0e0"></div>
       </div>
-      <div class="row c2">
-        <div class="piece" style="aspect-ratio:16/9;background:#e8e8e8"></div>
-        <div class="piece" style="aspect-ratio:16/9;background:#e8e8e8"></div>
+      <div class="row c3">
+        <div class="piece" style="aspect-ratio:16/9;background:#d8d8d8"></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#e4e4e4"></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#d4d4d4"></div>
       </div>
     </div>
   </div>
@@ -498,17 +524,20 @@ html, body {
   <!-- ━━ PROYECTO 1 ━━ -->
   <div class="project">
     <div class="grid">
-      <div class="row c1">
-        <div class="piece" style="aspect-ratio:16/9;background:#4a4a4a"></div>
-      </div>
-      <div class="row c2">
-        <div class="piece" style="aspect-ratio:4/3;background:#d4a04a"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#c4822e"></div>
-      </div>
       <div class="row c3">
-        <div class="piece" style="aspect-ratio:1/1;background:#3a6a3a"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#5a8a5a"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#2a5a2a"></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#c0c0c0"></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#cacaca"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#d0d0d0"></div>
+      </div>
+      <div class="row c2a">
+        <div class="piece" style="aspect-ratio:16/9;background:#b8b8b8"></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#c6c6c6"></div>
+      </div>
+      <div class="row c4">
+        <div class="piece" style="aspect-ratio:1/1;background:#bdbdbd"></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#c8c8c8"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#d2d2d2"></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#c4c4c4"></div>
       </div>
     </div>
   </div>
@@ -516,17 +545,19 @@ html, body {
   <!-- ━━ PROYECTO 2 ━━ -->
   <div class="project">
     <div class="grid">
-      <div class="row c13 rh" style="--rh:240px">
-        <div class="piece" style="background:#5533aa"></div>
-        <div class="piece" style="background:#aa88dd"></div>
-        <div class="piece" style="background:#887744"></div>
+      <div class="row c2b">
+        <div class="piece" style="aspect-ratio:3/4;background:#b8b8b8"></div>
+        <div class="piece" style="aspect-ratio:16/9;background:#d2d2d2"></div>
+      </div>
+      <div class="row c4">
+        <div class="piece" style="aspect-ratio:1/1;background:#c8c8c8"></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#bcbcbc"></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#d4d4d4"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#c0c0c0"></div>
       </div>
       <div class="row c2">
-        <div class="piece" style="aspect-ratio:4/3;background:#6644bb"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#9966ee"></div>
-      </div>
-      <div class="row c1">
-        <div class="piece" style="aspect-ratio:16/9;background:#7755cc"></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#cccccc"></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#b4b4b4"></div>
       </div>
     </div>
   </div>
@@ -534,16 +565,19 @@ html, body {
   <!-- ━━ PROYECTO 3 ━━ -->
   <div class="project">
     <div class="grid">
+      <div class="row c4">
+        <div class="piece" style="aspect-ratio:3/4;background:#b5b5b5"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#c2c2c2"></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#b0b0b0"></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#cbcbcb"></div>
+      </div>
       <div class="row c1">
-        <div class="piece" style="aspect-ratio:16/9;background:#55bbaa"></div>
+        <div class="piece" style="aspect-ratio:21/9;background:#ababab"></div>
       </div>
-      <div class="row c2">
-        <div class="piece" style="aspect-ratio:4/3;background:#66ccbb"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#449988"></div>
-      </div>
-      <div class="row c2">
-        <div class="piece" style="aspect-ratio:4/3;background:#33aa99"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#228877"></div>
+      <div class="row c3">
+        <div class="piece" style="aspect-ratio:4/3;background:#bfbfbf"></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#a8a8a8"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#c6c6c6"></div>
       </div>
     </div>
   </div>
@@ -551,17 +585,20 @@ html, body {
   <!-- ━━ PROYECTO 4 ━━ -->
   <div class="project">
     <div class="grid">
+      <div class="row c3">
+        <div class="piece" style="aspect-ratio:3/4;background:#cccccc"></div>
+        <div class="piece" style="aspect-ratio:16/9;background:#d8d8d8"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#cfcfcf"></div>
+      </div>
       <div class="row c2">
-        <div class="piece" style="aspect-ratio:4/3;background:#cc4466"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#ee6688"></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#c4c4c4"></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#d6d6d6"></div>
       </div>
-      <div class="row c1">
-        <div class="piece" style="aspect-ratio:16/9;background:#dd5577"></div>
-      </div>
-      <div class="row c13 rh" style="--rh:220px">
-        <div class="piece" style="background:#bb3355"></div>
-        <div class="piece" style="background:#dd7799"></div>
-        <div class="piece" style="background:#aa2244"></div>
+      <div class="row c4">
+        <div class="piece" style="aspect-ratio:3/4;background:#bcbcbc"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#c9c9c9"></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#d3d3d3"></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#c0c0c0"></div>
       </div>
     </div>
   </div>
@@ -569,17 +606,18 @@ html, body {
   <!-- ━━ PROYECTO 5 ━━ -->
   <div class="project">
     <div class="grid">
-      <div class="row c1">
-        <div class="piece" style="aspect-ratio:16/9;background:#ccaa22"></div>
+      <div class="row c2a">
+        <div class="piece" style="aspect-ratio:16/9;background:#c0c0c0"></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#cccccc"></div>
       </div>
       <div class="row c3">
-        <div class="piece" style="aspect-ratio:1/1;background:#ddbb33"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#bbaa11"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#aa9900"></div>
+        <div class="piece" style="aspect-ratio:1/1;background:#b8b8b8"></div>
+        <div class="piece" style="aspect-ratio:4/3;background:#d4d4d4"></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#b2b2b2"></div>
       </div>
       <div class="row c2">
-        <div class="piece" style="aspect-ratio:4/3;background:#eebb44"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#cc9911"></div>
+        <div class="piece" style="aspect-ratio:3/4;background:#c6c6c6"></div>
+        <div class="piece" style="aspect-ratio:16/9;background:#d0d0d0"></div>
       </div>
     </div>
   </div>
@@ -921,6 +959,7 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
     if (eye.classList.contains('closed')) return;
     eye.classList.add('closed');
     setTimeout(() => {
+      document.documentElement.classList.toggle('dark');
       eye.classList.remove('closed');
     }, 180);
   });
@@ -928,9 +967,11 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
 </script>
 <script>
 (function() {
-  const fill = document.getElementById('scrollFill');
+  const fill  = document.getElementById('scrollFill');
   const right = document.querySelector('.main-content');
+  const topBar = document.querySelector('.top-bar');
   right.addEventListener('scroll', () => {
+    topBar.classList.toggle('scrolled', right.scrollTop > 10);
     const pct = right.scrollTop / (right.scrollHeight - right.clientHeight);
     fill.style.width = (pct * 100) + '%';
     // Interpola blanco #f0f0f0 → amarillo #ff00aa
