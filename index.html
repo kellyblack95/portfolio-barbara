@@ -1198,12 +1198,11 @@ document.getElementById('splash').addEventListener('click', function() {
   const ctx    = canvas.getContext('2d');
   const GAP    = 44;
   const R      = 0.8;
-  const RADIUS = 120;  // radio de influencia del mouse
+  const RADIUS = 150;
   let cols, rows, dots, raf;
   let mx = -9999, my = -9999;
 
-  canvas.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  canvas.addEventListener('mouseleave', () => { mx = -9999; my = -9999; });
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
 
   function resize() {
     canvas.width  = window.innerWidth;
@@ -1217,7 +1216,7 @@ document.getElementById('splash').addEventListener('click', function() {
           x: c * GAP, y: r * GAP,
           phase: Math.random() * Math.PI * 2,
           speed: 0.6 + Math.random() * 1.4,
-          base:  0.03 + Math.random() * 0.08,
+          base:  0.12 + Math.random() * 0.12,
           lit: 0
         });
       }
