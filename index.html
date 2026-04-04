@@ -40,7 +40,7 @@
 }
 
 html, body {
-  height: 100%; overflow: hidden;
+  height: auto; overflow: auto;
   font-family: var(--font-sans);
   color: var(--black); background: #f8f8f8;
 }
@@ -54,8 +54,17 @@ html, body {
   align-items: center;
   gap: 32px;
   padding: 0 40px;
-  height: 90px;
+  height: 72px;
   background: transparent;
+  opacity: 0;
+  transform: translateY(-12px);
+  pointer-events: none;
+  transition: opacity .5s ease, transform .5s ease, background .3s ease, border-color .3s ease;
+}
+.top-bar.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
 }
 .top-bar-left {
   display: flex;
@@ -65,13 +74,11 @@ html, body {
 }
 .site-name {
   font-family: 'Varent Grotesk', var(--font-serif);
-  font-size: 5rem;
+  font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.03em;
   white-space: nowrap;
   line-height: 1;
-  opacity: 0;
-  animation: up .5s .1s both;
 }
 .top-bar-nav {
   display: flex;
@@ -86,8 +93,6 @@ html, body {
   background: none; border: none;
   transition: color .2s;
   padding: 4px 0;
-  opacity: 0;
-  animation: up .5s .2s both;
 }
 .top-bar-nav a:hover, .top-bar-nav button:hover { color: #ff00aa; }
 .top-bar.scrolled {
@@ -206,12 +211,9 @@ html.dark .top-bar.scrolled {
 /* ══ DARK MODE ══ */
 html.dark { --black: #f0f0f0; }
 html.dark body { background: #0a0a0a; color: #f0f0f0; }
-html.dark .main-content {
-  background-color: #0a0a0a;
+html.dark .portfolio {
   background-image: radial-gradient(circle, #333 1px, transparent 1px);
-  scrollbar-color: #333 transparent;
 }
-html.dark .main-content::-webkit-scrollbar-thumb { background: #333; }
 html.dark .eye { background: #111; border-color: #f0f0f0; }
 html.dark .eye-pupil { background: #f0f0f0; }
 html.dark .awards-panel { background: #111; border-color: #2a2a2a; }
@@ -228,20 +230,70 @@ html.dark .scroll-line-track { background: #1e1e1e; }
 html.dark .scroll-line-fill { background: #f0f0f0; }
 html.dark .cv-btn { border-color: #444; }
 
+/* ══ HERO ══ */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+#hero-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-name, .hero-tagline, .hero-hint {
+  position: relative;
+  z-index: 1;
+}
+.hero-name {
+  font-family: 'Varent Grotesk', var(--font-serif);
+  font-size: clamp(3.5rem, 9.8vw, 7.7rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  text-align: center;
+  color: var(--black);
+}
+.hero-tagline {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #888;
+  margin-top: 20px;
+}
+.hero-hint {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: up .8s 1.2s ease forwards;
+}
+.hero-hint span {
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #aaa;
+}
+.hero-hint svg { animation: bounceDown 1.4s 2s ease-in-out infinite; }
+@keyframes bounceDown {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(5px); }
+}
+
 /* ══ CONTENIDO PRINCIPAL ══ */
 .main-content {
-  padding-top: 90px;
-  height: 100vh;
-  overflow-y: auto;
   overflow-x: hidden;
-  background-color: #f8f8f8;
-  background-image: radial-gradient(circle, #ccc 1px, transparent 1px);
-  background-size: 28px 28px;
-  scrollbar-width: thin; scrollbar-color: #bbb transparent;
-  padding-left: 60px;
 }
-.main-content::-webkit-scrollbar { width: 3px; }
-.main-content::-webkit-scrollbar-thumb { background: #bbb; }
 
 /* ══ LÍNEA DE PROGRESO ══ */
 .scroll-line {
@@ -264,45 +316,31 @@ html.dark .cv-btn { border-color: #444; }
   transition: width .05s linear;
 }
 
-/* ══ OVERVIEW ══ */
-.overview {
-  padding: 80px 20px 0;
+/* ══ PORTFOLIO ══ */
+.portfolio {
+  padding: 80px 20px 40px;
+  background-color: #f8f8f8;
+  background-image: radial-gradient(circle, #ccc 1px, transparent 1px);
+  background-size: 28px 28px;
 }
-.overview-grid {
-  display: flex; flex-direction: column; gap: var(--gap);
-  width: 100%;
-}
-
-/* ══ PROYECTO ══ */
-.project {
-  padding: var(--gap) 20px 0;
-}
-.project:last-child { padding-bottom: 40px; }
 
 /* ══ GRID ══ */
-.grid { display: flex; flex-direction: column; gap: var(--gap); width: 100%; }
-
-.row {
-  display: grid; gap: var(--gap);
+.grid {
+  columns: 3;
+  column-gap: var(--gap);
   width: 100%;
-  align-items: start;
 }
-
-/* Layouts */
-.c1  { grid-template-columns: 1fr; }
-.c2  { grid-template-columns: 1fr 1fr; }
-.c3  { grid-template-columns: 1fr 1fr 1fr; }
-.c4  { grid-template-columns: 1fr 1fr 1fr 1fr; }
-.c2a { grid-template-columns: 3fr 2fr; }
-.c2b { grid-template-columns: 2fr 3fr; }
-.c13 { grid-template-columns: 1fr 1.7fr 1fr; }
-.c21 { grid-template-columns: 2fr 1fr; }
-.cmx { grid-template-columns: 1fr 1.4fr 1.4fr 1fr; }
-
 .piece {
-  border-radius: var(--radius); overflow: hidden;
-  background: #e8e8e8; display: block;
-  position: relative; z-index: 10; cursor: pointer;
+  break-inside: avoid;
+  display: block;
+  width: 100%;
+  margin-bottom: var(--gap);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #e8e8e8;
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
 }
 .piece canvas, .piece img, .piece video {
   width: 100%; height: 100%; display: block; object-fit: cover;
@@ -310,11 +348,11 @@ html.dark .cv-btn { border-color: #444; }
 
 /* Proporciones */
 .sq   { aspect-ratio: 1/1; }
-.land { aspect-ratio: 4/3; }
-.wide { aspect-ratio: 16/9; }
+.wide { aspect-ratio: 4/3; }
+.land { aspect-ratio: 16/9; }
 .cin  { aspect-ratio: 21/9; }
-.port { aspect-ratio: 3/4; }
-.tall { aspect-ratio: 2/3; }
+.port { aspect-ratio: 2/3; }
+.tall { aspect-ratio: 3/4; }
 
 /* Fondos pastel */
 .bg1  { background: #e8e8e8; } .bg2  { background: #efefef; }
@@ -325,62 +363,6 @@ html.dark .cv-btn { border-color: #444; }
 .bg11 { background: #ececec; } .bg12 { background: #e7e7e7; }
 
 
-/* ── Splash screen ── */
-#splash {
-  position: fixed;
-  inset: 0;
-  z-index: 999999;
-  background: #f8f8f8;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: opacity .6s ease, visibility .6s ease;
-  overflow: hidden;
-}
-#splash-dots {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-#splash.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-#splash-name-wrap {
-  animation: splashNameIn 1s .3s cubic-bezier(0.22,1,0.36,1) forwards;
-  opacity: 0;
-}
-#splash h1 {
-  font-family: 'Varent Grotesk', var(--font-serif);
-  font-size: 6rem;
-  font-weight: 700;
-  color: #111;
-  line-height: 0.85;
-  text-align: center;
-  letter-spacing: -0.03em;
-  margin-bottom: 16px;
-  transition: transform .4s ease, filter .4s ease;
-}
-#splash h1:hover {
-  transform: scale(1.15);
-  filter: blur(3px);
-}
-#splash p {
-  font-family: var(--font-sans);
-  font-size: 10px;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: #555;
-  opacity: 0;
-  animation: splashFadeIn .8s .8s ease forwards;
-}
-@keyframes splashNameIn {
-  from { opacity: 0; transform: scale(0.9); filter: blur(10px); }
-  to { opacity: 1; transform: scale(1); filter: blur(0); }
-}
 @keyframes splashFadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
@@ -391,9 +373,15 @@ html.dark .cv-btn { border-color: #444; }
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.piece { opacity: 0; animation: up .45s both; }
+.piece { opacity: 1; }
 
 /* Responsive */
+@media (max-width: 1100px) {
+  .grid { columns: 2; }
+}
+@media (max-width: 480px) {
+  .grid { columns: 1; }
+}
 @media (max-width: 768px) {
   /* ── Base ── */
   html, body { overflow: auto; height: auto; }
@@ -410,56 +398,39 @@ html.dark .cv-btn { border-color: #444; }
   .site-name { font-size: 2rem; }
   .top-bar-nav { gap: 14px; }
 
-  /* ── Contenido principal mobile ── */
-  .main-content {
-    padding-top: 64px;
-    height: auto;
-    overflow: visible;
-    padding-left: 0;
-  }
-
-  /* ── Overview ── */
-  .overview { padding: 30px 14px 0; }
-  .overview-grid { gap: 6px; }
-
-  /* ── Proyectos ── */
-  .project { padding: 40px 14px 0; }
-  .project:last-child { padding-bottom: 80px; }
-  .grid { width: 100%; }
-
-  /* ── Todas las grillas → 1 columna ── */
-  .c1, .c2, .c2a, .c2b, .c3, .c4, .c13, .c21, .cmx {
-    grid-template-columns: 1fr;
-  }
-  .row.rh { height: auto; }
-  .row.rh .piece { aspect-ratio: 16/9 !important; height: auto; }
+  /* ── Portfolio ── */
+  .portfolio { padding: 60px 14px 40px; }
+  .grid { columns: 2; }
 }
 </style>
 </head>
 <body>
 
-<!-- Splash screen -->
-<div id="splash">
-  <canvas id="splash-dots"></canvas>
-  <div id="splash-name-wrap">
-    <h1>Bár<br>bara</h1>
+<!-- Hero -->
+<section class="hero">
+  <canvas id="hero-dots"></canvas>
+  <h1 class="hero-name">Bár<br>bara</h1>
+  <p class="hero-tagline">Directora de Arte</p>
+  <div class="hero-hint">
+    <span>Scroll</span>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M7 2v10M3 8l4 4 4-4" stroke="#aaa" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
-  <p>Directora de Arte</p>
-</div>
+</section>
 
 <!-- Cursor -->
 <div class="cur" id="cur"></div>
 
 <header class="top-bar">
   <div class="top-bar-left">
-    <h1 class="site-name">Bárbara</h1>
     <div class="eye"><div class="eye-pupil" id="eyePupil"></div></div>
   </div>
   <nav class="top-bar-nav">
+    <button id="awardsBtn">Premios</button>
     <a href="https://www.instagram.com/emepecuatro" target="_blank">Instagram</a>
     <a href="https://www.behance.net/emepecuatro" target="_blank">Behance</a>
     <a href="https://www.linkedin.com/in/b%C3%A1rbara-soto-46aa49125/" target="_blank">LinkedIn</a>
-    <button id="awardsBtn">Premios</button>
   </nav>
 </header>
 
@@ -504,121 +475,69 @@ html.dark .cv-btn { border-color: #444; }
 
 <main class="main-content">
 
-  <!-- ━━ OVERVIEW ━━ -->
-  <div class="overview">
-    <div class="overview-grid">
-      <div class="row c4">
-        <div class="piece" style="aspect-ratio:3/4;background:#e8e8e8"><img src="images/overview-1.jpg" style="width:100%;height:100%;object-fit:cover;display:block"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#e8e8e8"><video src="images/overview-2.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
-        <div class="piece" style="aspect-ratio:3/4;background:#e8e8e8"><video src="images/overview-3.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#e0e0e0"></div>
-      </div>
-      <div class="row c3">
-        <div class="piece" style="aspect-ratio:16/9;background:#d8d8d8"></div>
-        <div class="piece" style="aspect-ratio:3/4;background:#e4e4e4"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#d4d4d4"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ━━ PROYECTO 1 ━━ -->
-  <div class="project">
+  <div class="portfolio">
     <div class="grid">
-      <div class="row c3">
-        <div class="piece" style="aspect-ratio:3/4;background:#c0c0c0"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#cacaca"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#d0d0d0"></div>
-      </div>
-      <div class="row c2a">
-        <div class="piece" style="aspect-ratio:16/9;background:#b8b8b8"></div>
-        <div class="piece" style="aspect-ratio:3/4;background:#c6c6c6"></div>
-      </div>
-      <div class="row c4">
-        <div class="piece" style="aspect-ratio:1/1;background:#bdbdbd"></div>
-        <div class="piece" style="aspect-ratio:3/4;background:#c8c8c8"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#d2d2d2"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#c4c4c4"></div>
-      </div>
-    </div>
-  </div>
 
-  <!-- ━━ PROYECTO 2 ━━ -->
-  <div class="project">
-    <div class="grid">
-      <div class="row c2b">
-        <div class="piece" style="aspect-ratio:3/4;background:#b8b8b8"></div>
-        <div class="piece" style="aspect-ratio:16/9;background:#d2d2d2"></div>
-      </div>
-      <div class="row c4">
-        <div class="piece" style="aspect-ratio:1/1;background:#c8c8c8"></div>
-        <div class="piece" style="aspect-ratio:3/4;background:#bcbcbc"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#d4d4d4"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#c0c0c0"></div>
-      </div>
-      <div class="row c2">
-        <div class="piece" style="aspect-ratio:4/3;background:#cccccc"></div>
-        <div class="piece" style="aspect-ratio:3/4;background:#b4b4b4"></div>
-      </div>
-    </div>
-  </div>
+      <!-- Medios reales -->
+      <div class="piece wide"  style="background:#e8e8e8"><img src="images/overview-1.jpg" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+      <div class="piece tall"  style="background:#e8e8e8"><video src="images/overview-2.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
+      <div class="piece sq"    style="background:#e8e8e8"><video src="images/overview-3.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block"></video></div>
 
-  <!-- ━━ PROYECTO 3 ━━ -->
-  <div class="project">
-    <div class="grid">
-      <div class="row c4">
-        <div class="piece" style="aspect-ratio:3/4;background:#b5b5b5"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#c2c2c2"></div>
-        <div class="piece" style="aspect-ratio:3/4;background:#b0b0b0"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#cbcbcb"></div>
-      </div>
-      <div class="row c1">
-        <div class="piece" style="aspect-ratio:21/9;background:#ababab"></div>
-      </div>
-      <div class="row c3">
-        <div class="piece" style="aspect-ratio:4/3;background:#bfbfbf"></div>
-        <div class="piece" style="aspect-ratio:3/4;background:#a8a8a8"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#c6c6c6"></div>
-      </div>
-    </div>
-  </div>
+      <!-- Placeholders -->
+      <div class="piece sq"    style="background:#c0c0c0"></div>
+      <div class="piece port"  style="background:#cacaca"></div>
+      <div class="piece wide"  style="background:#d0d0d0"></div>
+      <div class="piece tall"  style="background:#b8b8b8"></div>
+      <div class="piece land"  style="background:#c6c6c6"></div>
+      <div class="piece sq"    style="background:#ccc"></div>
+      <div class="piece port"  style="background:#bdbdbd"></div>
+      <div class="piece wide"  style="background:#c8c8c8"></div>
+      <div class="piece sq"    style="background:#d2d2d2"></div>
+      <div class="piece tall"  style="background:#c4c4c4"></div>
+      <div class="piece land"  style="background:#d4d4d4"></div>
+      <div class="piece wide"  style="background:#c2c2c2"></div>
+      <div class="piece sq"    style="background:#b5b5b5"></div>
+      <div class="piece port"  style="background:#d2d2d2"></div>
+      <div class="piece tall"  style="background:#c5c5c5"></div>
+      <div class="piece wide"  style="background:#c8c8c8"></div>
+      <div class="piece sq"    style="background:#bcbcbc"></div>
+      <div class="piece land"  style="background:#b4b4b4"></div>
+      <div class="piece port"  style="background:#d4d4d4"></div>
+      <div class="piece wide"  style="background:#c0c0c0"></div>
+      <div class="piece tall"  style="background:#cbcbcb"></div>
+      <div class="piece sq"    style="background:#b5b5b5"></div>
+      <div class="piece land"  style="background:#c2c2c2"></div>
+      <div class="piece wide"  style="background:#b0b0b0"></div>
+      <div class="piece port"  style="background:#cbcbcb"></div>
+      <div class="piece sq"    style="background:#ababab"></div>
+      <div class="piece tall"  style="background:#b3b3b3"></div>
+      <div class="piece land"  style="background:#bbbbbb"></div>
+      <div class="piece sq"    style="background:#bfbfbf"></div>
+      <div class="piece wide"  style="background:#c6c6c6"></div>
+      <div class="piece port"  style="background:#c3c3c3"></div>
+      <div class="piece sq"    style="background:#a8a8a8"></div>
+      <div class="piece tall"  style="background:#cccccc"></div>
+      <div class="piece wide"  style="background:#d8d8d8"></div>
+      <div class="piece land"  style="background:#cfcfcf"></div>
+      <div class="piece sq"    style="background:#c4c4c4"></div>
+      <div class="piece port"  style="background:#d6d6d6"></div>
+      <div class="piece wide"  style="background:#cdcdcd"></div>
+      <div class="piece tall"  style="background:#bcbcbc"></div>
+      <div class="piece sq"    style="background:#c9c9c9"></div>
+      <div class="piece land"  style="background:#c0c0c0"></div>
+      <div class="piece port"  style="background:#d3d3d3"></div>
+      <div class="piece wide"  style="background:#d1d1d1"></div>
+      <div class="piece sq"    style="background:#c0c0c0"></div>
+      <div class="piece tall"  style="background:#cccccc"></div>
+      <div class="piece land"  style="background:#c8c8c8"></div>
+      <div class="piece wide"  style="background:#b8b8b8"></div>
+      <div class="piece port"  style="background:#d4d4d4"></div>
+      <div class="piece sq"    style="background:#b2b2b2"></div>
+      <div class="piece tall"  style="background:#c6c6c6"></div>
+      <div class="piece wide"  style="background:#d0d0d0"></div>
+      <div class="piece sq"    style="background:#cacaca"></div>
+      <div class="piece land"  style="background:#c2c2c2"></div>
 
-  <!-- ━━ PROYECTO 4 ━━ -->
-  <div class="project">
-    <div class="grid">
-      <div class="row c3">
-        <div class="piece" style="aspect-ratio:3/4;background:#cccccc"></div>
-        <div class="piece" style="aspect-ratio:16/9;background:#d8d8d8"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#cfcfcf"></div>
-      </div>
-      <div class="row c2">
-        <div class="piece" style="aspect-ratio:4/3;background:#c4c4c4"></div>
-        <div class="piece" style="aspect-ratio:3/4;background:#d6d6d6"></div>
-      </div>
-      <div class="row c4">
-        <div class="piece" style="aspect-ratio:3/4;background:#bcbcbc"></div>
-        <div class="piece" style="aspect-ratio:1/1;background:#c9c9c9"></div>
-        <div class="piece" style="aspect-ratio:3/4;background:#d3d3d3"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#c0c0c0"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ━━ PROYECTO 5 ━━ -->
-  <div class="project">
-    <div class="grid">
-      <div class="row c2a">
-        <div class="piece" style="aspect-ratio:16/9;background:#c0c0c0"></div>
-        <div class="piece" style="aspect-ratio:3/4;background:#cccccc"></div>
-      </div>
-      <div class="row c3">
-        <div class="piece" style="aspect-ratio:1/1;background:#b8b8b8"></div>
-        <div class="piece" style="aspect-ratio:4/3;background:#d4d4d4"></div>
-        <div class="piece" style="aspect-ratio:3/4;background:#b2b2b2"></div>
-      </div>
-      <div class="row c2">
-        <div class="piece" style="aspect-ratio:3/4;background:#c6c6c6"></div>
-        <div class="piece" style="aspect-ratio:16/9;background:#d0d0d0"></div>
-      </div>
     </div>
   </div>
 
@@ -674,10 +593,6 @@ document.querySelectorAll('canvas.ph').forEach(c=>{
 });
 
 
-/* ── Stagger piezas ── */
-document.querySelectorAll('.piece').forEach((el,i)=>{
-  el.style.animationDelay=(i*.025+.05)+'s';
-});
 
 /* ── Scroll reveal proyectos ── */
 const obs = new IntersectionObserver(entries=>{
@@ -851,18 +766,16 @@ document.onkeydown = function(e) {
   <div class="scroll-line-fill" id="scrollFill"></div>
 </div>
 <script>
-document.getElementById('splash').addEventListener('click', function() {
-  this.classList.add('hidden');
-});
-
+</script>
+<script>
+/* ── Dots interactivos en hero ── */
 (function() {
-  const canvas = document.getElementById('splash-dots');
+  const canvas = document.getElementById('hero-dots');
   const ctx    = canvas.getContext('2d');
-  const GAP    = 44;
-  const R      = 0.8;
-  const RADIUS = 150;
+  const GAP    = 44, R = 0.9, RADIUS = 160;
   let cols, rows, dots, raf;
   let mx = -9999, my = -9999;
+  let active = true;
 
   document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
 
@@ -872,33 +785,24 @@ document.getElementById('splash').addEventListener('click', function() {
     cols = Math.ceil(canvas.width  / GAP) + 1;
     rows = Math.ceil(canvas.height / GAP) + 1;
     dots = [];
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        dots.push({
-          x: c * GAP, y: r * GAP,
-          phase: Math.random() * Math.PI * 2,
-          speed: 0.6 + Math.random() * 1.4,
-          base:  0.18 + Math.random() * 0.14,
-          lit: 0
-        });
-      }
-    }
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++)
+        dots.push({ x: c*GAP, y: r*GAP, base: 0.15 + Math.random()*0.12, lit: 0 });
   }
 
-  function draw(t) {
+  function draw() {
+    if (!active) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const secs = t * 0.001;
     for (const d of dots) {
-      const dx   = d.x - mx, dy = d.y - my;
+      const dx = d.x - mx, dy = d.y - my;
       const dist = Math.sqrt(dx*dx + dy*dy);
-      const proximity = dist < RADIUS ? 1 - dist / RADIUS : 0;
-      // suaviza la transición del brillo
-      d.lit += (proximity - d.lit) * 0.12;
-      const alpha = d.base + d.lit * (1 - d.base);
-      const radius = R + d.lit * 1.2;
+      const prox = dist < RADIUS ? 1 - dist / RADIUS : 0;
+      d.lit += (prox - d.lit) * 0.1;
+      const alpha  = d.base + d.lit * (1 - d.base);
+      const radius = R + d.lit * 1.4;
       ctx.beginPath();
       ctx.arc(d.x, d.y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(160,160,160,${Math.min(alpha, 1).toFixed(3)})`;
+      ctx.fillStyle = `rgba(150,150,150,${Math.min(alpha,1).toFixed(3)})`;
       ctx.fill();
     }
     raf = requestAnimationFrame(draw);
@@ -908,9 +812,17 @@ document.getElementById('splash').addEventListener('click', function() {
   window.addEventListener('resize', resize);
   raf = requestAnimationFrame(draw);
 
-  document.getElementById('splash').addEventListener('click', () => {
-    cancelAnimationFrame(raf);
-  });
+  // Para cuando el hero ya no es visible
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > window.innerHeight) {
+      active = false;
+      cancelAnimationFrame(raf);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    } else if (!active) {
+      active = true;
+      raf = requestAnimationFrame(draw);
+    }
+  }, { passive: true });
 })();
 </script>
 <script>
@@ -967,14 +879,23 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
 </script>
 <script>
 (function() {
-  const fill  = document.getElementById('scrollFill');
-  const right = document.querySelector('.main-content');
+  const fill   = document.getElementById('scrollFill');
   const topBar = document.querySelector('.top-bar');
-  right.addEventListener('scroll', () => {
-    topBar.classList.toggle('scrolled', right.scrollTop > 10);
-    const pct = right.scrollTop / (right.scrollHeight - right.clientHeight);
+
+  window.addEventListener('scroll', () => {
+    const sy    = window.scrollY;
+    const heroH = window.innerHeight; // hero siempre es 100vh
+    const max   = document.documentElement.scrollHeight - window.innerHeight;
+
+    // Top-bar aparece al salir completamente del hero
+    if (sy > heroH * 0.95) topBar.classList.add('visible');
+
+    // Blur backdrop cuando está sobre la grilla
+    topBar.classList.toggle('scrolled', sy > heroH);
+
+    // Línea de progreso
+    const pct = max > 0 ? sy / max : 0;
     fill.style.width = (pct * 100) + '%';
-    // Interpola blanco #f0f0f0 → amarillo #ff00aa
     const r = Math.round(0x11 + (0xff - 0x11) * pct);
     const g = Math.round(0x11 + (0x00 - 0x11) * pct);
     const b = Math.round(0x11 + (0xaa - 0x11) * pct);
