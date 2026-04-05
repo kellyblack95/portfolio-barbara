@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelly — Directora de Arte</title>
+<title>Bárbara — Directora de Arte</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23ECFE3C'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <style>
 @font-face {
   font-family: 'Varent Grotesk';
@@ -19,8 +20,8 @@
   --black: #111;
   --gray: #888;
   --border: #E8E8E8;
-  --radius: 10px;
-  --gap: 14px;
+  --radius: 5px;
+  --gap: 7px;
   --font-serif: 'Playfair Display', serif;
   --font-sans: 'DM Sans', sans-serif;
 }
@@ -29,13 +30,13 @@
 
 .cur {
   position: fixed;
-  width: 8px; height: 8px;
+  width: 14px; height: 14px;
   border-radius: 50%;
-  background: #ff00aa;
+  background: #ECFE3C;
   pointer-events: none;
   z-index: 9999999;
   left: 0; top: 0;
-  margin-left: -4px; margin-top: -4px;
+  margin-left: -7px; margin-top: -7px;
   will-change: transform;
 }
 
@@ -56,15 +57,7 @@ html, body {
   padding: 0 40px;
   height: 72px;
   background: transparent;
-  opacity: 0;
-  transform: translateY(-12px);
-  pointer-events: none;
-  transition: opacity .5s ease, transform .5s ease, background .3s ease, border-color .3s ease;
-}
-.top-bar.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: all;
+  transition: background .3s ease, border-color .3s ease;
 }
 .top-bar-left {
   display: flex;
@@ -89,12 +82,22 @@ html, body {
 .top-bar-nav a, .top-bar-nav button {
   font-size: 8.5px; letter-spacing: 0.24em; text-transform: uppercase;
   font-weight: 600;
-  color: var(--gray); text-decoration: none;
+  color: #444; text-decoration: none;
   background: none; border: none;
-  transition: color .2s;
   padding: 4px 0;
+  position: relative;
 }
-.top-bar-nav a:hover, .top-bar-nav button:hover { color: #ff00aa; }
+.top-bar-nav a::after, .top-bar-nav button::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: #444;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+.top-bar-nav a:hover::after, .top-bar-nav button:hover::after { transform: scaleX(1); }
 .top-bar.scrolled {
   background: rgba(248,248,248,0.92);
   backdrop-filter: blur(24px);
@@ -129,8 +132,15 @@ html.dark .top-bar.scrolled {
   background: #111;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  transition: transform .08s linear;
+  transition: transform .08s linear, width .2s ease, height .2s ease;
   will-change: transform;
+}
+.eye:hover .eye-pupil,
+.quien-eye:hover .quien-eye-pupil {
+  width: 72%; height: 72%;
+}
+.quien-eye-pupil {
+  transition: width .2s ease, height .2s ease;
 }
 
 .rule {
@@ -180,8 +190,8 @@ html.dark .top-bar.scrolled {
   transition: transform .25s, color .2s;
   flex-shrink: 0;
 }
-.award-item.open .award-btn { color: #ff00aa; }
-.award-item.open .award-btn-arrow { transform: rotate(180deg); color: #ff00aa; }
+.award-item.open .award-btn { color: #ECFE3C; }
+.award-item.open .award-btn-arrow { transform: rotate(180deg); color: #ECFE3C; }
 .award-detail {
   overflow: hidden;
   max-height: 0;
@@ -206,14 +216,52 @@ html.dark .top-bar.scrolled {
   padding: 8px 13px; text-decoration: none; width: fit-content;
   transition: background .2s, color .2s;
 }
-.cv-btn:hover { background: transparent; color: #ff00aa; border-color: #ff00aa; }
+.cv-btn:hover { background: transparent; color: #444; border-color: #444; }
+
+/* ══ PANEL CONTACTO ══ */
+.contact-panel {
+  position: fixed;
+  top: 64px; right: 40px;
+  z-index: 999;
+  background: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  padding: 8px 0;
+  width: 180px;
+  display: none;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+.contact-panel.open { display: block; }
+.contact-panel a {
+  display: block;
+  font-size: 8.5px; letter-spacing: 0.24em; text-transform: uppercase;
+  font-weight: 600; color: #444; text-decoration: none;
+  padding: 10px 20px;
+  transition: color .2s, background .2s;
+  position: relative;
+}
+.contact-panel a:hover { color: #111; background: rgba(0,0,0,0.03); }
+html.dark .contact-panel { background: #111; border-color: #2a2a2a; }
+html.dark .contact-panel a { color: #888; }
+html.dark .contact-panel a:hover { color: #f0f0f0; background: rgba(255,255,255,0.04); }
+body.quien-open .contact-panel { background: #e8f000; border-color: #ccd600; }
+body.quien-open .contact-panel a { color: #111; }
+body.quien-open .contact-panel a:hover { background: rgba(0,0,0,0.06); }
 
 /* ══ DARK MODE ══ */
 html.dark { --black: #f0f0f0; }
 html.dark body { background: #0a0a0a; color: #f0f0f0; }
 html.dark .portfolio {
+  background-color: #0a0a0a;
   background-image: radial-gradient(circle, #333 1px, transparent 1px);
 }
+html.dark .piece { background: #1e1e1e; }
+html.dark .hero { background: #0a0a0a; }
+html.dark .hero-name { color: #f0f0f0; }
+html.dark .hero-tagline { color: #aaa; }
+html.dark .top-bar-nav a,
+html.dark .top-bar-nav button { color: #aaa; }
+html.dark .top-bar-nav a::after,
+html.dark .top-bar-nav button::after { background: #aaa; }
 html.dark .eye { background: #111; border-color: #f0f0f0; }
 html.dark .eye-pupil { background: #f0f0f0; }
 html.dark .awards-panel { background: #111; border-color: #2a2a2a; }
@@ -250,13 +298,20 @@ html.dark .cv-btn { border-color: #444; }
   z-index: 1;
 }
 .hero-name {
-  font-family: 'Varent Grotesk', var(--font-serif);
+  font-family: 'Space Grotesk', var(--font-serif);
   font-size: clamp(3.5rem, 9.8vw, 7.7rem);
   font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 0.88;
+  letter-spacing: -0.085em;
+  line-height: 1;
   text-align: center;
   color: var(--black);
+  white-space: nowrap;
+}
+.hero-tagline {
+  animation: up .8s .9s ease both;
+}
+.hero-hint {
+  animation: up .8s 1.4s ease both !important;
 }
 .hero-tagline {
   font-family: var(--font-sans);
@@ -368,10 +423,33 @@ html.dark .cv-btn { border-color: #444; }
   to { opacity: 1; transform: translateY(0); }
 }
 
+
 /* Animaciones */
 @keyframes up {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroIn {
+  0%   { opacity: 0; filter: blur(30px); transform: scale(1.08); }
+  100% { opacity: 1; filter: blur(0px);  transform: scale(1); }
+}
+@keyframes letterIn {
+  0%   { opacity: 0; filter: blur(8px); transform: translateY(14px); }
+  100% { opacity: 1; filter: blur(0px); transform: translateY(0); }
+}
+.piece {
+  opacity: 0;
+  transform: translateY(-16px);
+  transition: opacity .8s ease, transform .8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.piece.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.hero-name .l {
+  display: inline-block;
+  animation: letterIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  white-space: pre;
 }
 .piece { opacity: 1; }
 
@@ -402,6 +480,141 @@ html.dark .cv-btn { border-color: #444; }
   .portfolio { padding: 60px 14px 40px; }
   .grid { columns: 2; }
 }
+
+/* ══ PANEL QUIÉN SOY ══ */
+.quien-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: #ECFE3C;
+  display: flex;
+  flex-direction: column;
+  padding: 88px 52px 48px;
+  gap: 40px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s ease;
+  overflow-y: auto;
+}
+.quien-panel.open { opacity: 1; pointer-events: all; }
+
+/* Columna izquierda: título + párrafo + video */
+.quien-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  max-width: 100%;
+}
+.quien-name-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.quien-bio-name {
+  font-family: 'Space Grotesk', var(--font-serif);
+  font-size: clamp(4.2rem, 8.4vw, 8.4rem);
+  font-weight: 700;
+  letter-spacing: -0.085em;
+  line-height: 0.88;
+  color: #111;
+}
+.quien-eye {
+  width: 52px; height: 52px; flex-shrink: 0;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #111;
+  position: relative;
+  overflow: hidden;
+  transition: transform .1s ease-in, transform .12s ease-out;
+  transform-origin: center center;
+}
+.quien-eye-pupil {
+  position: absolute;
+  width: 40%; height: 40%;
+  border-radius: 50%;
+  background: #111;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  transition: width .2s ease, height .2s ease, transform .08s linear;
+}
+.quien-eye:hover .quien-eye-pupil { width: 72%; height: 72%; }
+.quien-bio {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 34px;
+  line-height: 1.3;
+  color: #111;
+  max-width: 860px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Video abajo */
+.quien-video {
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 16/9;
+  min-height: unset;
+  border-radius: var(--radius);
+  background: rgba(0,0,0,0.15);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.quien-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Controles video */
+.v-controls {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 0 16px 14px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.45));
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.quien-video:hover .v-controls { opacity: 1; }
+.v-progress {
+  width: 100%; height: 2px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 2px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.v-fill { height: 100%; width: 0%; background: #fff; border-radius: 2px; transition: width .1s linear; }
+.v-bar { display: flex; align-items: center; gap: 12px; }
+.v-btn { background: none; border: none; color: #fff; padding: 0; display: flex; align-items: center; opacity: .85; transition: opacity .2s; }
+.v-btn:hover { opacity: 1; }
+.v-btn svg path, .v-btn svg rect { fill: currentColor; }
+.v-time { font-family: 'Courier New', monospace; font-size: 9px; color: rgba(255,255,255,0.7); }
+.v-spacer { flex: 1; }
+
+@keyframes quienIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.quien-panel.open .quien-bio-name { animation: quienIn .6s .1s cubic-bezier(0.16,1,0.3,1) both; }
+.quien-panel.open .quien-bio      { animation: quienIn .6s .2s cubic-bezier(0.16,1,0.3,1) both; }
+.quien-panel.open .quien-video    { animation: quienIn .6s .3s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* Header en pantalla quien soy: siempre negro, hover blanco */
+body.quien-open .top-bar-nav a,
+body.quien-open .top-bar-nav button,
+body.quien-open .cv-btn { color: #111 !important; border-color: #111 !important; }
+body.quien-open .top-bar-nav a::after,
+body.quien-open .top-bar-nav button::after { background: #111 !important; }
+body.quien-open .top-bar.scrolled {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border-bottom: none !important;
+}
+body.quien-open .top-bar-left .eye { display: none; }
+body.quien-open .cur {
+  background: transparent;
+  border: 1.5px solid #111;
+}
 </style>
 </head>
 <body>
@@ -409,7 +622,7 @@ html.dark .cv-btn { border-color: #444; }
 <!-- Hero -->
 <section class="hero">
   <canvas id="hero-dots"></canvas>
-  <h1 class="hero-name">Bár<br>bara</h1>
+  <h1 class="hero-name"><span class="l">bárbara.</span></h1>
   <p class="hero-tagline">Directora de Arte</p>
   <div class="hero-hint">
     <span>Scroll</span>
@@ -427,10 +640,11 @@ html.dark .cv-btn { border-color: #444; }
     <div class="eye"><div class="eye-pupil" id="eyePupil"></div></div>
   </div>
   <nav class="top-bar-nav">
+    <button id="inicioBtn">Inicio</button>
+    <button id="quienBtn">Quién soy</button>
     <button id="awardsBtn">Premios</button>
-    <a href="https://www.instagram.com/emepecuatro" target="_blank">Instagram</a>
-    <a href="https://www.behance.net/emepecuatro" target="_blank">Behance</a>
-    <a href="https://www.linkedin.com/in/b%C3%A1rbara-soto-46aa49125/" target="_blank">LinkedIn</a>
+    <button id="contactoBtn">Contacto</button>
+    <a href="CV.pdf" download class="cv-btn">Descargar CV</a>
   </nav>
 </header>
 
@@ -471,6 +685,13 @@ html.dark .cv-btn { border-color: #444; }
       </div></div>
     </div>
   </div>
+</div>
+
+<!-- ══ PANEL CONTACTO ══ -->
+<div class="contact-panel" id="contactPanel">
+  <a href="https://www.instagram.com/emepecuatro" target="_blank">Instagram</a>
+  <a href="https://www.behance.net/emepecuatro" target="_blank">Behance</a>
+  <a href="https://www.linkedin.com/in/b%C3%A1rbara-soto-46aa49125/" target="_blank">LinkedIn</a>
 </div>
 
 <main class="main-content">
@@ -543,6 +764,11 @@ html.dark .cv-btn { border-color: #444; }
 
 </main>
 
+<script>
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
+</script>
 <script>
 /* ── Cursor directo sin lag ── */
 const cur = document.getElementById('cur');
@@ -661,6 +887,40 @@ document.querySelectorAll('.project').forEach(p=>{
 #lb-next { right: 24px; }
 </style>
 
+<!-- Panel Quién soy -->
+<div class="quien-panel" id="quienPanel">
+  <div class="quien-top">
+    <div class="quien-name-row">
+      <h3 class="quien-bio-name">bárbara.</h3>
+      <div class="quien-eye"><div class="quien-eye-pupil"></div></div>
+    </div>
+    <div class="quien-bio">
+      <p>Directora de arte enfocada en conceptualización y ejecución de ideas visuales. Experiencia en motion, animación, diseño y video, trabajando de manera integral desde la idea hasta su desarrollo final.</p>
+    </div>
+    <div class="quien-video" id="quienVideoWrap">
+    <video src="images/Kelly%20video.mp4" playsinline id="quienVideo"></video>
+    <div class="v-controls">
+      <div class="v-progress"><div class="v-fill" id="vFill"></div></div>
+      <div class="v-bar">
+        <button class="v-btn" id="vPlay">
+          <svg id="vIconPlay" width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M0 0l12 7-12 7z"/></svg>
+          <svg id="vIconPause" width="12" height="14" viewBox="0 0 12 14" fill="currentColor" style="display:none"><rect x="0" width="4" height="14"/><rect x="8" width="4" height="14"/></svg>
+        </button>
+        <span class="v-time" id="vTime">0:00</span>
+        <div class="v-spacer"></div>
+        <button class="v-btn" id="vMute">
+          <svg id="vIconSound" width="16" height="14" viewBox="0 0 16 14" fill="currentColor"><path d="M0 4h3l5-4v14l-5-4H0V4zm11 1a4 4 0 010 4M13 2a7 7 0 010 10"/></svg>
+          <svg id="vIconMuted" width="16" height="14" viewBox="0 0 16 14" fill="currentColor" style="display:none"><path d="M0 4h3l5-4v14l-5-4H0V4zm10 2l4 4m0-4l-4 4"/></svg>
+        </button>
+        <button class="v-btn" id="vFullscreen">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M0 0h4v2H2v2H0V0zm10 0h4v4h-2V2h-2V0zM0 10h2v2h2v2H0v-4zm12 2h-2v2h4v-4h-2v2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
 <!-- Lightbox HTML -->
 <div id="lb">
   <span id="lb-close">✕</span>
@@ -768,6 +1028,30 @@ document.onkeydown = function(e) {
 <script>
 </script>
 <script>
+/* ── Animación de entrada de piezas al scroll ── */
+(function() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      obs.unobserve(entry.target);
+    });
+  }, { threshold: 0.04 });
+
+  document.querySelectorAll('.piece').forEach(el => obs.observe(el));
+})();
+
+/* ── Animación por línea del título ── */
+function playHeroAnim() {
+  document.querySelectorAll('.hero-name .l').forEach(s => {
+    s.style.animation = 'none';
+    s.offsetHeight;
+    s.style.animation = '';
+    s.style.animationDelay = '0.1s';
+  });
+}
+</script>
+<script>
 /* ── Dots interactivos en hero ── */
 (function() {
   const canvas = document.getElementById('hero-dots');
@@ -826,6 +1110,86 @@ document.onkeydown = function(e) {
 })();
 </script>
 <script>
+/* ── Panel Quién soy ── */
+(function() {
+  const panel = document.getElementById('quienPanel');
+  const btn   = document.getElementById('quienBtn');
+  const close = document.getElementById('quienClose');
+  const inicioBtn = document.getElementById('inicioBtn');
+  function openPanel()  { panel.classList.add('open');    document.body.classList.add('quien-open'); }
+  function closePanel() {
+    panel.classList.remove('open');
+    document.body.classList.remove('quien-open');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(playHeroAnim, 400);
+  }
+  btn.addEventListener('click', openPanel);
+  inicioBtn.addEventListener('click', closePanel);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+
+  // Controles de video
+  const vid       = document.getElementById('quienVideo');
+  const vPlay     = document.getElementById('vPlay');
+  const vMute     = document.getElementById('vMute');
+  const vFill     = document.getElementById('vFill');
+  const vTime     = document.getElementById('vTime');
+  const vProgress = document.querySelector('.v-progress');
+  const vIconPlay  = document.getElementById('vIconPlay');
+  const vIconPause = document.getElementById('vIconPause');
+  const vIconSound = document.getElementById('vIconSound');
+  const vIconMuted = document.getElementById('vIconMuted');
+
+  function fmt(s) { return `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}` }
+
+  function togglePlay() { vid.paused ? vid.play() : vid.pause(); }
+  vPlay.addEventListener('click', togglePlay);
+  vid.addEventListener('click', togglePlay);
+  vid.addEventListener('play',  () => { vIconPlay.style.display='none';  vIconPause.style.display=''; });
+  vid.addEventListener('pause', () => { vIconPlay.style.display='';      vIconPause.style.display='none'; });
+  vid.addEventListener('timeupdate', () => {
+    if (!vid.duration) return;
+    vFill.style.width = (vid.currentTime / vid.duration * 100) + '%';
+    vTime.textContent = fmt(vid.currentTime);
+  });
+  vProgress.addEventListener('click', e => {
+    const r = vProgress.getBoundingClientRect();
+    vid.currentTime = ((e.clientX - r.left) / r.width) * vid.duration;
+  });
+  vMute.addEventListener('click', () => {
+    vid.muted = !vid.muted;
+    vIconSound.style.display = vid.muted ? 'none' : '';
+    vIconMuted.style.display = vid.muted ? '' : 'none';
+  });
+
+  document.getElementById('vFullscreen').addEventListener('click', () => {
+    const wrap = document.getElementById('quienVideoWrap');
+    if (wrap.requestFullscreen) wrap.requestFullscreen();
+    else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
+  });
+
+  // Ojo animado (sigue el mouse)
+  const quienEye   = document.querySelector('.quien-eye');
+  const quienPupil = document.querySelector('.quien-eye-pupil');
+  document.addEventListener('mousemove', e => {
+    const r    = quienEye.getBoundingClientRect();
+    const cx   = r.left + r.width  / 2;
+    const cy   = r.top  + r.height / 2;
+    const dx   = e.clientX - cx;
+    const dy   = e.clientY - cy;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const max  = r.width * 0.28;
+    const ratio = Math.min(dist, max) / (dist || 1);
+    quienPupil.style.transform = `translate(calc(-50% + ${dx*ratio}px), calc(-50% + ${dy*ratio}px))`;
+  });
+
+  // Parpadeo ojo quien-eye cada 10 segundos
+  function blinkQuienEye() {
+    quienEye.style.transform = 'scaleY(0.06)';
+    setTimeout(() => { quienEye.style.transform = ''; }, 160);
+  }
+  setInterval(blinkQuienEye, 10000);
+})();
+
 document.querySelectorAll('.award-item .award-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const item = btn.closest('.award-item');
@@ -840,11 +1204,29 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
   const awardsPanel = document.getElementById('awardsPanel');
   awardsBtn.addEventListener('click', (e) => {
     e.stopPropagation();
+    const cp = document.getElementById('contactPanel');
+    if (cp) cp.classList.remove('open');
     awardsPanel.classList.toggle('open');
   });
   document.addEventListener('click', (e) => {
     if (!awardsPanel.contains(e.target) && e.target !== awardsBtn) {
       awardsPanel.classList.remove('open');
+    }
+  });
+})();
+
+(function() {
+  const contactoBtn  = document.getElementById('contactoBtn');
+  const contactPanel = document.getElementById('contactPanel');
+  const awardsPanel  = document.getElementById('awardsPanel');
+  contactoBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    awardsPanel.classList.remove('open');
+    contactPanel.classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!contactPanel.contains(e.target) && e.target !== contactoBtn) {
+      contactPanel.classList.remove('open');
     }
   });
 })();
@@ -875,6 +1257,14 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
       eye.classList.remove('closed');
     }, 180);
   });
+
+  // Parpadeo automático cada 13 segundos
+  function blink() {
+    if (eye.classList.contains('closed')) return;
+    eye.classList.add('closed');
+    setTimeout(() => eye.classList.remove('closed'), 160);
+  }
+  setInterval(blink, 13000);
 })();
 </script>
 <script>
@@ -882,13 +1272,21 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
   const fill   = document.getElementById('scrollFill');
   const topBar = document.querySelector('.top-bar');
 
+  const heroName    = document.querySelector('.hero-name');
+  const heroTagline = document.querySelector('.hero-tagline');
+  const heroHint    = document.querySelector('.hero-hint');
+
   window.addEventListener('scroll', () => {
     const sy    = window.scrollY;
     const heroH = window.innerHeight; // hero siempre es 100vh
-    const max   = document.documentElement.scrollHeight - window.innerHeight;
 
-    // Top-bar aparece al salir completamente del hero
-    if (sy > heroH * 0.95) topBar.classList.add('visible');
+    // Blur + fade del título al scrollear
+    const p = Math.min(1, sy / (heroH * 0.6));
+    heroName.style.filter    = `blur(${(p * 20).toFixed(1)}px)`;
+    heroName.style.opacity   = (1 - p).toFixed(3);
+    heroTagline.style.opacity = (1 - p * 2).toFixed(3);
+    heroHint.style.opacity    = (1 - p * 3).toFixed(3);
+    const max   = document.documentElement.scrollHeight - window.innerHeight;
 
     // Blur backdrop cuando está sobre la grilla
     topBar.classList.toggle('scrolled', sy > heroH);
