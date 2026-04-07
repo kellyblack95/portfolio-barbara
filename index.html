@@ -4,14 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bárbara — Directora de Arte</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23ECFE3C'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23e16fb1'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Space+Grotesk:wght@700&family=Inter+Tight:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 @font-face {
   font-family: 'Varent Grotesk';
   src: url('fonts/VarentGrotesk-Bold.otf') format('opentype');
   font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Mena Grotesk';
+  src: url('fonts/Mena%20Grotesk%20Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Mena Grotesk';
+  src: url('fonts/Mena%20Grotesk%20Regular%20Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
   font-display: swap;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,7 +46,7 @@
   position: fixed;
   width: 14px; height: 14px;
   border-radius: 50%;
-  background: #ECFE3C;
+  background: #e16fb1;
   pointer-events: none;
   z-index: 9999999;
   left: 0; top: 0;
@@ -43,7 +57,7 @@
 html, body {
   height: auto; overflow: auto;
   font-family: var(--font-sans);
-  color: var(--black); background: #f8f8f8;
+  color: var(--black); background: #e2e2e2;
 }
 
 /* ══ TOP BAR ══ */
@@ -109,10 +123,10 @@ html.dark .top-bar.scrolled {
   border-bottom: 1px solid #2a2a2a;
 }
 
-/* ══ OJO ══ */
+/* ══ OJO (cápsula) ══ */
 .eye {
-  width: 52px; height: 52px; flex-shrink: 0;
-  border-radius: 50%;
+  width: 96px; height: 52px; flex-shrink: 0;
+  border-radius: 999px;
   background: #fff;
   border: 2px solid #111;
   position: relative;
@@ -120,14 +134,13 @@ html.dark .top-bar.scrolled {
   cursor: pointer !important;
   transition: transform .1s ease-in, transform .12s ease-out;
   transform-origin: center center;
-  margin-bottom: 4px;
 }
 .eye.closed {
   transform: scaleY(0.06);
 }
 .eye-pupil {
   position: absolute;
-  width: 40%; height: 40%;
+  width: 38%; height: 70%;
   border-radius: 50%;
   background: #111;
   top: 50%; left: 50%;
@@ -135,13 +148,8 @@ html.dark .top-bar.scrolled {
   transition: transform .08s linear, width .2s ease, height .2s ease;
   will-change: transform;
 }
-.eye:hover .eye-pupil,
-.quien-eye:hover .quien-eye-pupil {
-  width: 72%; height: 72%;
-}
-.quien-eye-pupil {
-  transition: width .2s ease, height .2s ease;
-}
+.eye:hover .eye-pupil { width: 62%; height: 105%; }
+.quien-eye:hover .quien-eye-pupil { width: 62%; height: 105%; }
 
 .rule {
   width: 100%; height: 1px; background: #ddd;
@@ -255,9 +263,7 @@ html.dark .portfolio {
   background-image: radial-gradient(circle, #333 1px, transparent 1px);
 }
 html.dark .piece { background: #1e1e1e; }
-html.dark .hero { background: #0a0a0a; }
-html.dark .hero-name { color: #f0f0f0; }
-html.dark .hero-tagline { color: #aaa; }
+html.dark .hero { background: #8b3a6e; }
 html.dark .top-bar-nav a,
 html.dark .top-bar-nav button { color: #aaa; }
 html.dark .top-bar-nav a::after,
@@ -286,6 +292,8 @@ html.dark .cv-btn { border-color: #444; }
   align-items: center;
   justify-content: center;
   position: relative;
+  background: #e2e2e2;
+  overflow: hidden;
 }
 #hero-dots {
   position: absolute;
@@ -293,34 +301,39 @@ html.dark .cv-btn { border-color: #444; }
   pointer-events: none;
   z-index: 0;
 }
-.hero-name, .hero-tagline, .hero-hint {
+.hero-text {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 .hero-name {
-  font-family: 'Space Grotesk', var(--font-serif);
-  font-size: clamp(3.5rem, 9.8vw, 7.7rem);
-  font-weight: 700;
-  letter-spacing: -0.085em;
+  margin: 0;
   line-height: 1;
-  text-align: center;
-  color: var(--black);
-  white-space: nowrap;
+}
+.hero-name img {
+  height: clamp(45px, 8vw, 110px);
+  width: auto;
+  max-width: 80vw;
+  display: block;
+  filter: brightness(0);
+  transition: filter .4s ease;
+}
+.hero-name img:hover {
+  filter: brightness(0) blur(6px);
 }
 .hero-tagline {
-  animation: up .8s .9s ease both;
+  font-family: 'Mena Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: #555;
+  margin: 0;
+  line-height: 1;
 }
-.hero-hint {
-  animation: up .8s 1.4s ease both !important;
-}
-.hero-tagline {
-  font-family: var(--font-sans);
-  font-size: 9px;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: #888;
-  margin-top: 20px;
-}
+.hero-tagline em { font-style: italic; }
 .hero-hint {
   position: absolute;
   bottom: 36px;
@@ -330,8 +343,7 @@ html.dark .cv-btn { border-color: #444; }
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  opacity: 0;
-  animation: up .8s 1.2s ease forwards;
+  z-index: 1;
 }
 .hero-hint span {
   font-size: 8px;
@@ -374,8 +386,8 @@ html.dark .cv-btn { border-color: #444; }
 /* ══ PORTFOLIO ══ */
 .portfolio {
   padding: 80px 20px 40px;
-  background-color: #f8f8f8;
-  background-image: radial-gradient(circle, #ccc 1px, transparent 1px);
+  background-color: #e2e2e2;
+  background-image: radial-gradient(circle, #b0b0b0 1.5px, transparent 1.5px);
   background-size: 28px 28px;
 }
 
@@ -418,25 +430,6 @@ html.dark .cv-btn { border-color: #444; }
 .bg11 { background: #ececec; } .bg12 { background: #e7e7e7; }
 
 
-@keyframes splashFadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-
-/* Animaciones */
-@keyframes up {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes heroIn {
-  0%   { opacity: 0; filter: blur(30px); transform: scale(1.08); }
-  100% { opacity: 1; filter: blur(0px);  transform: scale(1); }
-}
-@keyframes letterIn {
-  0%   { opacity: 0; filter: blur(8px); transform: translateY(14px); }
-  100% { opacity: 1; filter: blur(0px); transform: translateY(0); }
-}
 .piece {
   opacity: 0;
   transform: translateY(-16px);
@@ -446,12 +439,6 @@ html.dark .cv-btn { border-color: #444; }
   opacity: 1;
   transform: translateY(0);
 }
-.hero-name .l {
-  display: inline-block;
-  animation: letterIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
-  white-space: pre;
-}
-.piece { opacity: 1; }
 
 /* Responsive */
 @media (max-width: 1100px) {
@@ -486,44 +473,30 @@ html.dark .cv-btn { border-color: #444; }
   position: fixed;
   inset: 0;
   z-index: 999;
-  background: #ECFE3C;
   display: flex;
-  flex-direction: column;
-  padding: 88px 52px 48px;
-  gap: 40px;
+  flex-direction: row;
   opacity: 0;
   pointer-events: none;
   transition: opacity .4s ease;
-  overflow-y: auto;
+  overflow: hidden;
 }
 .quien-panel.open { opacity: 1; pointer-events: all; }
 
-/* Columna izquierda: título + párrafo + video */
-.quien-top {
+/* Sidebar rosada izquierda */
+.quien-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: #e16fb1;
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
-  gap: 24px;
-  max-width: 100%;
-}
-.quien-name-row {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.quien-bio-name {
-  font-family: 'Space Grotesk', var(--font-serif);
-  font-size: clamp(4.2rem, 8.4vw, 8.4rem);
-  font-weight: 700;
-  letter-spacing: -0.085em;
-  line-height: 0.88;
-  color: #111;
+  justify-content: center;
+  padding-top: 40px;
 }
 .quien-eye {
-  width: 52px; height: 52px; flex-shrink: 0;
-  border-radius: 50%;
+  width: 120px; height: 68px;
+  border-radius: 999px;
   background: #fff;
-  border: 2px solid #111;
+  border: 3px solid #111;
   position: relative;
   overflow: hidden;
   transition: transform .1s ease-in, transform .12s ease-out;
@@ -531,31 +504,79 @@ html.dark .cv-btn { border-color: #444; }
 }
 .quien-eye-pupil {
   position: absolute;
-  width: 40%; height: 40%;
+  width: 42%; height: 72%;
   border-radius: 50%;
   background: #111;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   transition: width .2s ease, height .2s ease, transform .08s linear;
 }
-.quien-eye:hover .quien-eye-pupil { width: 72%; height: 72%; }
-.quien-bio {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 34px;
-  line-height: 1.3;
-  color: #111;
-  max-width: 860px;
+.quien-eye:hover .quien-eye-pupil { width: 55%; height: 90%; }
+
+/* Contenido derecho */
+.quien-content {
+  flex: 1;
+  background: #e2e2e2;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: flex-start;
+  padding: 48px 64px 56px;
+  overflow-y: auto;
+  position: relative;
+}
+#draw-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  display: block;
+}
+.draw-clear {
+  position: fixed;
+  bottom: 24px;
+  right: 32px;
+  z-index: 1001;
+  background: none;
+  border: none;
+  font-family: 'Mena Grotesk', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #555;
+  opacity: 0;
+  transition: opacity .3s;
+  display: none;
+}
+body.quien-open .draw-clear { display: block; }
+.draw-clear.visible { opacity: 1; }
+.draw-clear:hover { color: #111; }
+
+/* Nombre SVG */
+.quien-name-img {
+  height: clamp(50px, 9vw, 120px);
+  width: auto;
+  max-width: 80%;
+  display: block;
+  filter: brightness(0);
+  margin: 0 0 20px 0;
 }
 
-/* Video abajo */
+/* Bio */
+.quien-bio {
+  font-family: 'Mena Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.25;
+  color: #111;
+  max-width: 560px;
+  margin: 0 0 auto 0;
+}
+
+/* Video */
 .quien-video {
   width: 100%;
-  max-width: 380px;
+  max-width: 420px;
   aspect-ratio: 16/9;
-  min-height: unset;
   border-radius: var(--radius);
   background: rgba(0,0,0,0.15);
   overflow: hidden;
@@ -563,6 +584,8 @@ html.dark .cv-btn { border-color: #444; }
   align-items: center;
   justify-content: center;
   position: relative;
+  flex-shrink: 0;
+  margin: 0 0 0 0;
 }
 .quien-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -591,15 +614,62 @@ html.dark .cv-btn { border-color: #444; }
 .v-time { font-family: 'Courier New', monospace; font-size: 9px; color: rgba(255,255,255,0.7); }
 .v-spacer { flex: 1; }
 
+/* Premios — fila inferior */
+.quien-awards {
+  border-top: 1px solid #bbb;
+  margin-top: 48px;
+  padding-top: 28px;
+  display: flex;
+  gap: 0;
+  align-items: flex-start;
+}
+.quien-awards-logo {
+  width: 80px;
+  filter: brightness(0);
+  margin-right: 64px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.quien-awards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 64px;
+  flex: 1;
+}
+.quien-award-col {}
+.quien-award-title {
+  font-family: var(--font-sans);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #111;
+  margin-bottom: 10px;
+}
+.quien-award-title span {
+  color: #888;
+  font-weight: 400;
+}
+.quien-award-item {
+  font-family: var(--font-sans);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #555;
+  line-height: 1.9;
+}
+
 @keyframes quienIn {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.quien-panel.open .quien-bio-name { animation: quienIn .6s .1s cubic-bezier(0.16,1,0.3,1) both; }
+.quien-panel.open .quien-name-img { animation: quienIn .6s .1s cubic-bezier(0.16,1,0.3,1) both; }
 .quien-panel.open .quien-bio      { animation: quienIn .6s .2s cubic-bezier(0.16,1,0.3,1) both; }
 .quien-panel.open .quien-video    { animation: quienIn .6s .3s cubic-bezier(0.16,1,0.3,1) both; }
+.quien-panel.open .quien-awards   { animation: quienIn .6s .4s cubic-bezier(0.16,1,0.3,1) both; }
 
-/* Header en pantalla quien soy: siempre negro, hover blanco */
+/* Header en pantalla quien soy */
 body.quien-open .top-bar-nav a,
 body.quien-open .top-bar-nav button,
 body.quien-open .cv-btn { color: #111 !important; border-color: #111 !important; }
@@ -612,8 +682,8 @@ body.quien-open .top-bar.scrolled {
 }
 body.quien-open .top-bar-left .eye { display: none; }
 body.quien-open .cur {
-  background: transparent;
-  border: 1.5px solid #111;
+  background: #e16fb1;
+  border: none;
 }
 </style>
 </head>
@@ -622,8 +692,10 @@ body.quien-open .cur {
 <!-- Hero -->
 <section class="hero">
   <canvas id="hero-dots"></canvas>
-  <h1 class="hero-name"><span class="l">bárbara.</span></h1>
-  <p class="hero-tagline">Directora de Arte</p>
+  <div class="hero-text">
+    <h1 class="hero-name"><img src="images/nombre%20svg.svg" alt="bárbara."></h1>
+    <p class="hero-tagline"><em>Art</em> Director</p>
+  </div>
   <div class="hero-hint">
     <span>Scroll</span>
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -889,36 +961,45 @@ document.querySelectorAll('.project').forEach(p=>{
 
 <!-- Panel Quién soy -->
 <div class="quien-panel" id="quienPanel">
-  <div class="quien-top">
-    <div class="quien-name-row">
-      <h3 class="quien-bio-name">bárbara.</h3>
-      <div class="quien-eye"><div class="quien-eye-pupil"></div></div>
-    </div>
+
+  <!-- Sidebar rosada -->
+  <div class="quien-sidebar">
+    <div class="quien-eye"><div class="quien-eye-pupil"></div></div>
+  </div>
+
+  <!-- Contenido -->
+  <div class="quien-content" id="quienContent">
+    <img src="images/nombre%20svg.svg" alt="bárbara." class="quien-name-img">
+
     <div class="quien-bio">
-      <p>Directora de arte enfocada en conceptualización y ejecución de ideas visuales. Experiencia en motion, animación, diseño y video, trabajando de manera integral desde la idea hasta su desarrollo final.</p>
+      <p>Art director focused on conceptualization and visual development. Working across motion, animation, design, and video. Interested in collaborating with people who value the creative process to build solid, thoughtful work.</p>
     </div>
-    <div class="quien-video" id="quienVideoWrap">
-    <video src="images/Kelly%20video.mp4" playsinline id="quienVideo"></video>
-    <div class="v-controls">
-      <div class="v-progress"><div class="v-fill" id="vFill"></div></div>
-      <div class="v-bar">
-        <button class="v-btn" id="vPlay">
-          <svg id="vIconPlay" width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M0 0l12 7-12 7z"/></svg>
-          <svg id="vIconPause" width="12" height="14" viewBox="0 0 12 14" fill="currentColor" style="display:none"><rect x="0" width="4" height="14"/><rect x="8" width="4" height="14"/></svg>
-        </button>
-        <span class="v-time" id="vTime">0:00</span>
-        <div class="v-spacer"></div>
-        <button class="v-btn" id="vMute">
-          <svg id="vIconSound" width="16" height="14" viewBox="0 0 16 14" fill="currentColor"><path d="M0 4h3l5-4v14l-5-4H0V4zm11 1a4 4 0 010 4M13 2a7 7 0 010 10"/></svg>
-          <svg id="vIconMuted" width="16" height="14" viewBox="0 0 16 14" fill="currentColor" style="display:none"><path d="M0 4h3l5-4v14l-5-4H0V4zm10 2l4 4m0-4l-4 4"/></svg>
-        </button>
-        <button class="v-btn" id="vFullscreen">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M0 0h4v2H2v2H0V0zm10 0h4v4h-2V2h-2V0zM0 10h2v2h2v2H0v-4zm12 2h-2v2h4v-4h-2v2z"/></svg>
-        </button>
+
+
+    <!-- Premios -->
+    <div class="quien-awards">
+      <img src="Eikon.svg" alt="EIKON" class="quien-awards-logo">
+      <div class="quien-awards-grid">
+        <div class="quien-award-col">
+          <div class="quien-award-title">Saval <span>— 2025</span></div>
+          <div class="quien-award-item">Festival – CBR Comunicación<br>Oro (x2) + Rubí Innovación<br>Atrévete ¡Muévete! – Plata</div>
+        </div>
+        <div class="quien-award-col">
+          <div class="quien-award-title">Codelco <span>— 2023</span></div>
+          <div class="quien-award-item">Planeta Seguridad: Gamificación – Plata<br>Vamos Codelco – Plata</div>
+        </div>
+        <div class="quien-award-col">
+          <div class="quien-award-title">Falabella <span>— 2023</span></div>
+          <div class="quien-award-item">Valores Compartidos<br>CBR Comunicación – Bronce</div>
+        </div>
+        <div class="quien-award-col">
+          <div class="quien-award-title">Ecomac <span>— 2024</span></div>
+          <div class="quien-award-item">Gamificación valores<br>CBR Comunicación – Azul</div>
+        </div>
       </div>
     </div>
+
   </div>
-</div>
 </div>
 
 <!-- Lightbox HTML -->
@@ -1056,7 +1137,7 @@ function playHeroAnim() {
 (function() {
   const canvas = document.getElementById('hero-dots');
   const ctx    = canvas.getContext('2d');
-  const GAP    = 44, R = 0.9, RADIUS = 160;
+  const GAP    = 44, R = 0.9, RADIUS = 220;
   let cols, rows, dots, raf;
   let mx = -9999, my = -9999;
   let active = true;
@@ -1071,7 +1152,7 @@ function playHeroAnim() {
     dots = [];
     for (let r = 0; r < rows; r++)
       for (let c = 0; c < cols; c++)
-        dots.push({ x: c*GAP, y: r*GAP, base: 0.15 + Math.random()*0.12, lit: 0 });
+        dots.push({ x: c*GAP, y: r*GAP, base: 0.25, lit: 0 });
   }
 
   function draw() {
@@ -1082,11 +1163,16 @@ function playHeroAnim() {
       const dist = Math.sqrt(dx*dx + dy*dy);
       const prox = dist < RADIUS ? 1 - dist / RADIUS : 0;
       d.lit += (prox - d.lit) * 0.1;
-      const alpha  = d.base + d.lit * (1 - d.base);
-      const radius = R + d.lit * 1.4;
+      const alpha  = d.base + d.lit * (0.9 - d.base);
+      const radius = 1.4 + d.lit * 1.2;
       ctx.beginPath();
       ctx.arc(d.x, d.y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(150,150,150,${Math.min(alpha,1).toFixed(3)})`;
+      // base gris, hover rosado #e16fb1
+      const t = Math.pow(d.lit, 0.4);
+      const r = Math.round(150 + (225 - 150) * t);
+      const g = Math.round(150 + (111 - 150) * t);
+      const b = Math.round(150 + (177 - 150) * t);
+      ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(alpha,1).toFixed(3)})`;
       ctx.fill();
     }
     raf = requestAnimationFrame(draw);
@@ -1127,46 +1213,6 @@ function playHeroAnim() {
   inicioBtn.addEventListener('click', closePanel);
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
 
-  // Controles de video
-  const vid       = document.getElementById('quienVideo');
-  const vPlay     = document.getElementById('vPlay');
-  const vMute     = document.getElementById('vMute');
-  const vFill     = document.getElementById('vFill');
-  const vTime     = document.getElementById('vTime');
-  const vProgress = document.querySelector('.v-progress');
-  const vIconPlay  = document.getElementById('vIconPlay');
-  const vIconPause = document.getElementById('vIconPause');
-  const vIconSound = document.getElementById('vIconSound');
-  const vIconMuted = document.getElementById('vIconMuted');
-
-  function fmt(s) { return `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}` }
-
-  function togglePlay() { vid.paused ? vid.play() : vid.pause(); }
-  vPlay.addEventListener('click', togglePlay);
-  vid.addEventListener('click', togglePlay);
-  vid.addEventListener('play',  () => { vIconPlay.style.display='none';  vIconPause.style.display=''; });
-  vid.addEventListener('pause', () => { vIconPlay.style.display='';      vIconPause.style.display='none'; });
-  vid.addEventListener('timeupdate', () => {
-    if (!vid.duration) return;
-    vFill.style.width = (vid.currentTime / vid.duration * 100) + '%';
-    vTime.textContent = fmt(vid.currentTime);
-  });
-  vProgress.addEventListener('click', e => {
-    const r = vProgress.getBoundingClientRect();
-    vid.currentTime = ((e.clientX - r.left) / r.width) * vid.duration;
-  });
-  vMute.addEventListener('click', () => {
-    vid.muted = !vid.muted;
-    vIconSound.style.display = vid.muted ? 'none' : '';
-    vIconMuted.style.display = vid.muted ? '' : 'none';
-  });
-
-  document.getElementById('vFullscreen').addEventListener('click', () => {
-    const wrap = document.getElementById('quienVideoWrap');
-    if (wrap.requestFullscreen) wrap.requestFullscreen();
-    else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
-  });
-
   // Ojo animado (sigue el mouse)
   const quienEye   = document.querySelector('.quien-eye');
   const quienPupil = document.querySelector('.quien-eye-pupil');
@@ -1189,6 +1235,7 @@ function playHeroAnim() {
   }
   setInterval(blinkQuienEye, 10000);
 })();
+
 
 document.querySelectorAll('.award-item .award-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -1272,20 +1319,19 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
   const fill   = document.getElementById('scrollFill');
   const topBar = document.querySelector('.top-bar');
 
-  const heroName    = document.querySelector('.hero-name');
-  const heroTagline = document.querySelector('.hero-tagline');
+  const heroText    = document.querySelector('.hero-text');
   const heroHint    = document.querySelector('.hero-hint');
 
   window.addEventListener('scroll', () => {
     const sy    = window.scrollY;
-    const heroH = window.innerHeight; // hero siempre es 100vh
+    const heroH = window.innerHeight;
 
-    // Blur + fade del título al scrollear
+    // Blur + fade del bloque hero al scrollear
     const p = Math.min(1, sy / (heroH * 0.6));
-    heroName.style.filter    = `blur(${(p * 20).toFixed(1)}px)`;
-    heroName.style.opacity   = (1 - p).toFixed(3);
-    heroTagline.style.opacity = (1 - p * 2).toFixed(3);
-    heroHint.style.opacity    = (1 - p * 3).toFixed(3);
+    if (heroText) {
+      heroText.style.opacity = (1 - p).toFixed(3);
+    }
+    if (heroHint) heroHint.style.opacity = (1 - p * 3).toFixed(3);
     const max   = document.documentElement.scrollHeight - window.innerHeight;
 
     // Blur backdrop cuando está sobre la grilla
@@ -1299,6 +1345,45 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
     const b = Math.round(0x11 + (0xaa - 0x11) * pct);
     fill.style.background = `rgb(${r},${g},${b})`;
   }, { passive: true });
+})();
+</script>
+<canvas id="draw-canvas"></canvas>
+<button class="draw-clear" id="drawClear">Borrar</button>
+<script>
+(function() {
+  const canvas   = document.getElementById('draw-canvas');
+  const clearBtn = document.getElementById('drawClear');
+  canvas.width   = window.innerWidth;
+  canvas.height  = window.innerHeight;
+  const ctx      = canvas.getContext('2d');
+  let lastX = 0, lastY = 0, moved = false, hasDrawn = false;
+
+  document.addEventListener('mousemove', function(e) {
+    if (!document.body.classList.contains('quien-open')) { moved = false; return; }
+    if (!moved) { lastX = e.clientX; lastY = e.clientY; moved = true; return; }
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(e.clientX, e.clientY);
+    ctx.strokeStyle = 'rgba(255,255,255,1)';
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+    lastX = e.clientX;
+    lastY = e.clientY;
+    if (!hasDrawn) { hasDrawn = true; clearBtn.classList.add('visible'); }
+  });
+
+  clearBtn.addEventListener('click', function() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hasDrawn = false; moved = false;
+    clearBtn.classList.remove('visible');
+  });
+
+  window.addEventListener('resize', function() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
 })();
 </script>
 </body>
