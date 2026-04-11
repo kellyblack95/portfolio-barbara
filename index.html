@@ -448,68 +448,9 @@ html.dark .scroll-line-fill { background: #f0f0f0; }
   transform: translateY(0);
 }
 
-/* Responsive */
+/* Responsive — tablet grid */
 @media (max-width: 1100px) {
   .grid { columns: 2; }
-}
-@media (max-width: 480px) {
-  .grid { columns: 1; }
-}
-@media (max-width: 768px) {
-  /* ── Base ── */
-  html, body { overflow: auto; height: auto; }
-  * { cursor: auto !important; }
-  .cur { display: none; }
-  .scroll-line { display: none; }
-
-  /* ── Top bar mobile ── */
-  .top-bar {
-    padding: 0 16px;
-    height: 56px;
-    gap: 8px;
-  }
-  .site-name { font-size: 1.2rem; }
-  .top-bar-nav { gap: 10px; }
-  .top-bar-nav .cv-btn { display: none; }
-  .top-bar-nav a, .top-bar-nav button { font-size: 7px; letter-spacing: 0.15em; }
-  .top-bar-left .eye { display: none; }
-  .awards-panel { top: 56px; right: 16px; width: 220px; }
-  .contact-panel { top: 56px; right: 16px; width: 160px; }
-
-  /* ── Hero mobile ── */
-  .hero-name img { height: clamp(38px, 12vw, 72px); }
-  .hero-tagline { font-size: 12px; }
-
-  /* ── Portfolio ── */
-  .portfolio { padding: 56px 0 40px; }
-  .grid-wrap { padding: 0 14px; }
-  .grid { columns: 2; }
-
-  /* ── Panel Quién soy mobile ── */
-  .quien-panel { flex-direction: column; }
-  .quien-sidebar {
-    width: 100%;
-    height: 100px;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    padding-top: 0;
-    padding: 0;
-  }
-  .quien-eye { width: 80px; height: 46px; }
-  .quien-content {
-    padding: 28px 24px 48px;
-    flex: 1;
-    overflow-y: auto;
-  }
-  .quien-name-img { height: clamp(36px, 10vw, 72px); margin-bottom: 14px; }
-  .quien-bio { font-size: 16px; line-height: 1.3; max-width: 100%; }
-  .quien-awards { flex-direction: column; gap: 16px; margin-top: 32px; padding-top: 20px; }
-  .quien-awards-logo { margin-right: 0; margin-bottom: 10px; }
-  .quien-awards-grid { gap: 16px 20px; }
-
-  /* ── Draw canvas: ocultar en mobile (no aplica con dedo) ── */
-  #draw-canvas { display: none; }
 }
 
 /* ══ PANEL QUIÉN SOY ══ */
@@ -730,6 +671,126 @@ body.quien-open .top-bar-left .eye { display: none; }
 body.quien-open .cur {
   background: #e16fb1;
   border: none;
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE — MOBILE & TABLET
+   Placed AFTER all base definitions so overrides work
+   ══════════════════════════════════════════════ */
+
+/* ── Tablet (769–1100px) ── */
+@media (max-width: 1100px) and (min-width: 769px) {
+  .grid-wrap { padding: 0 40px; }
+  .quien-sidebar { width: 180px; }
+  .quien-content { padding: 40px 48px 48px; }
+}
+
+/* ── Mobile (≤768px) ── */
+@media (max-width: 768px) {
+  /* Base resets */
+  html, body { overflow: auto; height: auto; }
+  * { cursor: auto !important; }
+  .cur { display: none !important; }
+  .scroll-line { display: none; }
+
+  /* Top bar */
+  .top-bar {
+    padding: 0 16px;
+    height: 56px;
+    gap: 8px;
+  }
+  .site-name { font-size: 1.2rem; }
+  .top-bar-left .eye { display: none; }
+  .top-bar-nav { gap: 10px; }
+  .top-bar-nav .cv-btn { display: none; }
+  .top-bar-nav a,
+  .top-bar-nav button {
+    font-size: 7px;
+    letter-spacing: 0.15em;
+  }
+
+  /* Paneles dropdown */
+  .awards-panel { top: 56px; right: 16px; width: 240px; }
+  .contact-panel { top: 56px; right: 16px; width: 160px; }
+
+  /* Hero */
+  .hero-name img { height: clamp(32px, 10vw, 64px); }
+  .hero-tagline { font-size: 11px; }
+  .hero-hint { bottom: 24px; }
+
+  /* Portfolio grid */
+  .portfolio { padding: 56px 0 40px; }
+  .grid-wrap { padding: 0 14px; }
+  .grid { columns: 2; }
+
+  /* Piezas — imágenes y videos */
+  .piece img, .piece video {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+
+  /* Quien soy — vertical layout */
+  .quien-panel { flex-direction: column; }
+  .quien-sidebar {
+    width: 100%;
+    height: 90px;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .quien-eye { width: 72px; height: 42px; border-width: 2px; }
+  .quien-content {
+    padding: 28px 24px 48px;
+    flex: 1;
+    overflow-y: auto;
+  }
+  .quien-name-img {
+    height: clamp(32px, 9vw, 64px);
+    margin-bottom: 14px;
+    max-width: 70%;
+  }
+  .quien-bio {
+    font-size: 15px;
+    line-height: 1.35;
+    max-width: 100%;
+  }
+  .quien-awards {
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 28px;
+    padding-top: 20px;
+  }
+  .quien-awards-logo {
+    margin-right: 0;
+    margin-bottom: 8px;
+    width: 60px;
+  }
+  .quien-awards-grid { gap: 16px 24px; }
+
+  /* Draw canvas — hidden on touch */
+  #draw-canvas { display: none !important; }
+  .draw-clear { display: none !important; }
+}
+
+/* ── Small phones (≤480px) ── */
+@media (max-width: 480px) {
+  .grid { columns: 1; }
+  .grid-wrap { padding: 0 10px; }
+  .top-bar { padding: 0 12px; }
+  .top-bar-nav { gap: 7px; }
+  .site-name { font-size: 1rem; }
+  .hero-name img { height: clamp(28px, 10vw, 52px); }
+  .hero-tagline { font-size: 10px; }
+
+  .quien-sidebar { height: 76px; }
+  .quien-eye { width: 60px; height: 36px; }
+  .quien-content { padding: 24px 20px 40px; }
+  .quien-bio { font-size: 14px; }
+  .quien-name-img { max-width: 60%; }
+  .quien-awards-grid { gap: 14px 16px; }
+  .quien-award-title { font-size: 7px; }
+  .quien-award-item { font-size: 7px; }
 }
 </style>
 </head>
@@ -1005,6 +1066,26 @@ document.querySelectorAll('.project').forEach(p=>{
 .lb-arrow:hover { background: rgba(255,255,255,.2); }
 #lb-prev { left: 24px; }
 #lb-next { right: 24px; }
+
+/* Lightbox mobile */
+@media (max-width: 768px) {
+  #lb-content img, #lb-content video {
+    max-width: 96vw;
+    max-height: 80vh;
+    border-radius: 4px;
+  }
+  .lb-arrow {
+    width: 36px; height: 36px;
+    font-size: 24px;
+  }
+  #lb-prev { left: 8px; }
+  #lb-next { right: 8px; }
+  #lb-close {
+    top: 12px; right: 12px;
+    width: 36px; height: 36px;
+    font-size: 24px;
+  }
+}
 </style>
 
 <!-- Panel Quién soy -->
@@ -1149,6 +1230,29 @@ document.onkeydown = function(e) {
   if (e.key === 'ArrowLeft') lbPrev.onclick(e);
   if (e.key === 'ArrowRight') lbNext.onclick(e);
 };
+
+// Swipe touch para lightbox
+(function() {
+  var touchStartX = 0;
+  var touchStartY = 0;
+  lb.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  lb.addEventListener('touchend', function(e) {
+    if (lb.style.display !== 'flex') return;
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    var dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx)) return;
+    if (dx < 0) {
+      var next = currentIndex < allPieces.length - 1 ? currentIndex + 1 : 0;
+      showPiece(next);
+    } else {
+      var prev = currentIndex > 0 ? currentIndex - 1 : allPieces.length - 1;
+      showPiece(prev);
+    }
+  }, { passive: true });
+})();
 </script>
 <div class="scroll-line">
   <div class="scroll-line-track"></div>
