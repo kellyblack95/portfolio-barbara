@@ -742,7 +742,7 @@ body.quien-open .cur {
     display: none;
     position: fixed;
     top: 56px; left: 0; right: 0;
-    z-index: 999;
+    z-index: 1001;
     background: rgba(248,248,248,0.97);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -918,7 +918,6 @@ body.quien-open .cur {
 <div class="mobile-menu" id="mobileMenu">
   <button id="mInicioBtn">Inicio</button>
   <button id="mQuienBtn">Quién soy</button>
-  <button id="mAwardsBtn">Premios</button>
   <button id="mContactoBtn">Contacto</button>
   <div class="menu-separator"></div>
   <a href="CV.pdf" download>Descargar CV</a>
@@ -1708,7 +1707,8 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
     menu.classList.remove('open');
   }
 
-  burger.addEventListener('click', () => {
+  burger.addEventListener('click', (e) => {
+    e.stopPropagation();
     burger.classList.toggle('open');
     menu.classList.toggle('open');
     // Cerrar paneles abiertos
@@ -1716,26 +1716,22 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
     document.getElementById('contactPanel').classList.remove('open');
   });
 
-  // Inicio
-  document.getElementById('mInicioBtn').addEventListener('click', () => {
+  // Cada botón del menú: stopPropagation para que los document handlers
+  // de awards/contact no cierren paneles en el mismo ciclo de evento
+  document.getElementById('mInicioBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
     closeMenu();
     document.getElementById('inicioBtn').click();
   });
 
-  // Quién soy
-  document.getElementById('mQuienBtn').addEventListener('click', () => {
+  document.getElementById('mQuienBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
     closeMenu();
     document.getElementById('quienBtn').click();
   });
 
-  // Premios
-  document.getElementById('mAwardsBtn').addEventListener('click', () => {
-    closeMenu();
-    document.getElementById('awardsBtn').click();
-  });
-
-  // Contacto
-  document.getElementById('mContactoBtn').addEventListener('click', () => {
+  document.getElementById('mContactoBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
     closeMenu();
     document.getElementById('contactoBtn').click();
   });

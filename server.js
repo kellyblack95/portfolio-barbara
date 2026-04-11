@@ -64,6 +64,7 @@ http.createServer((req, res) => {
       fs.createReadStream(filePath).pipe(res);
     }
   });
-}).listen(PORT, () => {
+}).listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`En tu teléfono: http://192.168.1.93:${PORT}`);
 });
