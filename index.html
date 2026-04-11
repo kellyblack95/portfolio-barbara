@@ -257,18 +257,22 @@ body.quien-open .contact-panel a:hover { background: rgba(0,0,0,0.06); }
 
 /* ══ DARK MODE ══ */
 html.dark { --black: #f0f0f0; }
-html.dark body { background: #0a0a0a; color: #f0f0f0; }
+html.dark body { background: #111; color: #f0f0f0; }
 html.dark .portfolio {
-  background-color: #0a0a0a;
-  background-image: radial-gradient(circle, #333 1px, transparent 1px);
+  background-color: #111;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.22) 1.4px, transparent 1.4px);
+  background-size: 44px 44px;
 }
 html.dark .piece { background: #1e1e1e; }
-html.dark .hero { background: #8b3a6e; }
+html.dark .hero { background: #111; }
+html.dark .hero-name img { filter: brightness(0) invert(1); }
+html.dark .hero-tagline { color: rgba(255,255,255,0.6); }
 html.dark .top-bar-nav a,
-html.dark .top-bar-nav button { color: #aaa; }
+html.dark .top-bar-nav button { color: #f0f0f0; }
 html.dark .top-bar-nav a::after,
-html.dark .top-bar-nav button::after { background: #aaa; }
-html.dark .eye { background: #111; border-color: #f0f0f0; }
+html.dark .top-bar-nav button::after { background: #f0f0f0; }
+html.dark .cv-btn { color: #f0f0f0; border-color: #f0f0f0; }
+html.dark .eye { background: #222; border-color: #f0f0f0; }
 html.dark .eye-pupil { background: #f0f0f0; }
 html.dark .awards-panel { background: #111; border-color: #2a2a2a; }
 html.dark .awards-separator { background: #2a2a2a; }
@@ -282,7 +286,6 @@ html.dark .award-detail-text { color: #666; }
 html.dark .awards-logo { filter: brightness(0) invert(1); }
 html.dark .scroll-line-track { background: #1e1e1e; }
 html.dark .scroll-line-fill { background: #f0f0f0; }
-html.dark .cv-btn { border-color: #444; }
 
 /* ══ HERO ══ */
 .hero {
@@ -385,10 +388,15 @@ html.dark .cv-btn { border-color: #444; }
 
 /* ══ PORTFOLIO ══ */
 .portfolio {
-  padding: 80px 20px 40px;
+  padding: 80px 0 60px;
   background-color: #e2e2e2;
-  background-image: radial-gradient(circle, #b0b0b0 1.5px, transparent 1.5px);
-  background-size: 28px 28px;
+  background-image: radial-gradient(circle, rgba(100,100,100,0.25) 1.4px, transparent 1.4px);
+  background-size: 44px 44px;
+}
+.grid-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 60px;
 }
 
 /* ══ GRID ══ */
@@ -456,16 +464,52 @@ html.dark .cv-btn { border-color: #444; }
 
   /* ── Top bar mobile ── */
   .top-bar {
-    padding: 0 20px;
-    height: 64px;
-    gap: 16px;
+    padding: 0 16px;
+    height: 56px;
+    gap: 8px;
   }
-  .site-name { font-size: 2rem; }
-  .top-bar-nav { gap: 14px; }
+  .site-name { font-size: 1.2rem; }
+  .top-bar-nav { gap: 10px; }
+  .top-bar-nav .cv-btn { display: none; }
+  .top-bar-nav a, .top-bar-nav button { font-size: 7px; letter-spacing: 0.15em; }
+  .top-bar-left .eye { display: none; }
+  .awards-panel { top: 56px; right: 16px; width: 220px; }
+  .contact-panel { top: 56px; right: 16px; width: 160px; }
+
+  /* ── Hero mobile ── */
+  .hero-name img { height: clamp(38px, 12vw, 72px); }
+  .hero-tagline { font-size: 12px; }
 
   /* ── Portfolio ── */
-  .portfolio { padding: 60px 14px 40px; }
+  .portfolio { padding: 56px 0 40px; }
+  .grid-wrap { padding: 0 14px; }
   .grid { columns: 2; }
+
+  /* ── Panel Quién soy mobile ── */
+  .quien-panel { flex-direction: column; }
+  .quien-sidebar {
+    width: 100%;
+    height: 100px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0;
+    padding: 0;
+  }
+  .quien-eye { width: 80px; height: 46px; }
+  .quien-content {
+    padding: 28px 24px 48px;
+    flex: 1;
+    overflow-y: auto;
+  }
+  .quien-name-img { height: clamp(36px, 10vw, 72px); margin-bottom: 14px; }
+  .quien-bio { font-size: 16px; line-height: 1.3; max-width: 100%; }
+  .quien-awards { flex-direction: column; gap: 16px; margin-top: 32px; padding-top: 20px; }
+  .quien-awards-logo { margin-right: 0; margin-bottom: 10px; }
+  .quien-awards-grid { gap: 16px 20px; }
+
+  /* ── Draw canvas: ocultar en mobile (no aplica con dedo) ── */
+  #draw-canvas { display: none; }
 }
 
 /* ══ PANEL QUIÉN SOY ══ */
@@ -534,7 +578,8 @@ html.dark .cv-btn { border-color: #444; }
 .draw-clear {
   position: fixed;
   bottom: 24px;
-  right: 32px;
+  left: 0;
+  width: 220px;
   z-index: 1001;
   background: none;
   border: none;
@@ -542,14 +587,15 @@ html.dark .cv-btn { border-color: #444; }
   font-size: 9px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #555;
+  color: rgba(255,255,255,0.6);
   opacity: 0;
   transition: opacity .3s;
   display: none;
+  text-align: center;
 }
 body.quien-open .draw-clear { display: block; }
 .draw-clear.visible { opacity: 1; }
-.draw-clear:hover { color: #111; }
+.draw-clear:hover { color: #fff; }
 
 /* Nombre SVG */
 .quien-name-img {
@@ -769,6 +815,7 @@ body.quien-open .cur {
 <main class="main-content">
 
   <div class="portfolio">
+    <div class="grid-wrap">
     <div class="grid">
 
       <!-- Medios reales -->
@@ -831,6 +878,7 @@ body.quien-open .cur {
       <div class="piece sq"    style="background:#cacaca"></div>
       <div class="piece land"  style="background:#c2c2c2"></div>
 
+    </div>
     </div>
   </div>
 
@@ -1137,12 +1185,22 @@ function playHeroAnim() {
 (function() {
   const canvas = document.getElementById('hero-dots');
   const ctx    = canvas.getContext('2d');
-  const GAP    = 44, R = 0.9, RADIUS = 220;
+  const GAP    = 44, R = 1.4, RADIUS = 220;
   let cols, rows, dots, raf;
   let mx = -9999, my = -9999;
   let active = true;
 
   document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  document.addEventListener('touchmove', e => {
+    mx = e.touches[0].clientX; my = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchstart', e => {
+    mx = e.touches[0].clientX; my = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', () => {
+    // fade out slowly after lift
+    mx = -9999; my = -9999;
+  }, { passive: true });
 
   function resize() {
     canvas.width  = window.innerWidth;
@@ -1152,7 +1210,7 @@ function playHeroAnim() {
     dots = [];
     for (let r = 0; r < rows; r++)
       for (let c = 0; c < cols; c++)
-        dots.push({ x: c*GAP, y: r*GAP, base: 0.25, lit: 0 });
+        dots.push({ x: c*GAP, y: r*GAP, base: 0.22, lit: 0 });
   }
 
   function draw() {
@@ -1164,7 +1222,7 @@ function playHeroAnim() {
       const prox = dist < RADIUS ? 1 - dist / RADIUS : 0;
       d.lit += (prox - d.lit) * 0.1;
       const alpha  = d.base + d.lit * (0.9 - d.base);
-      const radius = 1.4 + d.lit * 1.2;
+      const radius = R + d.lit * 1.2;
       ctx.beginPath();
       ctx.arc(d.x, d.y, radius, 0, Math.PI * 2);
       // base gris, hover rosado #e16fb1
@@ -1208,6 +1266,7 @@ function playHeroAnim() {
     document.body.classList.remove('quien-open');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(playHeroAnim, 400);
+    if (window._clearDraw) window._clearDraw();
   }
   btn.addEventListener('click', openPanel);
   inicioBtn.addEventListener('click', closePanel);
@@ -1348,42 +1407,92 @@ document.querySelectorAll('.award-item .award-btn').forEach(btn => {
 })();
 </script>
 <canvas id="draw-canvas"></canvas>
-<button class="draw-clear" id="drawClear">Borrar</button>
 <script>
 (function() {
-  const canvas   = document.getElementById('draw-canvas');
-  const clearBtn = document.getElementById('drawClear');
-  canvas.width   = window.innerWidth;
-  canvas.height  = window.innerHeight;
-  const ctx      = canvas.getContext('2d');
-  let lastX = 0, lastY = 0, moved = false, hasDrawn = false;
+  const canvas  = document.getElementById('draw-canvas');
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const ctx     = canvas.getContext('2d');
+
+  const sidebar = document.querySelector('.quien-sidebar');
+
+  let pts        = [];   // all recorded points in order
+  let tail       = 0;    // index where the visible segment starts (snake head)
+  let moved      = false;
+  let frameCount = 0;
+  const ERASE_EVERY = 2; // frames between each tail advance — higher = slower erase
+
+  function inSidebar(x, y) {
+    const r = sidebar.getBoundingClientRect();
+    return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+  }
+
+  function drawSegments(points) {
+    if (points.length < 2) return;
+    const n = points.length;
+    for (let i = 1; i < n; i++) {
+      const t = i / (n - 1);
+      const pressure = Math.sin(t * Math.PI); // thin at start and end
+      const w = 0.4 + pressure * 2.2;
+      ctx.beginPath();
+      ctx.moveTo(points[i-1].x, points[i-1].y);
+      ctx.lineTo(points[i].x, points[i].y);
+      ctx.strokeStyle = 'rgba(255,255,255,0.95)';
+      ctx.lineWidth = w;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+    }
+  }
+
+  // Continuous RAF loop — erase advances independently of mouse
+  function loop() {
+    if (!document.body.classList.contains('quien-open')) {
+      requestAnimationFrame(loop);
+      return;
+    }
+    frameCount++;
+    if (frameCount % ERASE_EVERY === 0 && tail < pts.length) {
+      tail++;
+      // compact array when tail gets large to avoid memory growth
+      if (tail > 500) {
+        pts = pts.slice(tail);
+        tail = 0;
+      }
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const visible = pts.slice(tail);
+    if (visible.length > 1) drawSegments(visible);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
 
   document.addEventListener('mousemove', function(e) {
     if (!document.body.classList.contains('quien-open')) { moved = false; return; }
-    if (!moved) { lastX = e.clientX; lastY = e.clientY; moved = true; return; }
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.clientX, e.clientY);
-    ctx.strokeStyle = 'rgba(255,255,255,1)';
-    ctx.lineWidth = 3;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.stroke();
-    lastX = e.clientX;
-    lastY = e.clientY;
-    if (!hasDrawn) { hasDrawn = true; clearBtn.classList.add('visible'); }
+    if (!inSidebar(e.clientX, e.clientY)) { moved = false; return; }
+    if (!moved) { moved = true; return; } // skip first point to avoid jump
+    pts.push({ x: e.clientX, y: e.clientY });
   });
 
-  clearBtn.addEventListener('click', function() {
+  sidebar.addEventListener('mouseleave', () => { moved = false; });
+  document.addEventListener('mouseleave', () => { moved = false; });
+
+  function clearDraw() {
+    pts = []; tail = 0; moved = false;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    hasDrawn = false; moved = false;
-    clearBtn.classList.remove('visible');
+  }
+
+  document.addEventListener('contextmenu', function(e) {
+    if (!document.body.classList.contains('quien-open')) return;
+    e.preventDefault();
+    clearDraw();
   });
 
   window.addEventListener('resize', function() {
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
   });
+
+  window._clearDraw = clearDraw;
 })();
 </script>
 </body>
